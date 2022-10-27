@@ -8,5 +8,6 @@ Reference: Whats is Cardano Blockchain ---> https://cardano.org/
 
 Pool id: `pool1xzfrmeux886ckdm2ekk3t3xe2ch5666m7zxa6dt0zrfm5mq2ksm`  
 Ticker: `[YACP]`  
+Since: `10/27/2022 2:45:37 PM`   
 
 <<< EDITING IN PROGRESS >>>
