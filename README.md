@@ -1,4 +1,6 @@
-# yacp
+![](https://badgen.net/https/rodolfotiago.npkn.net/ada-price/)
+
+# [YACP]
 ### Yet Another Cool Pool
 
 YACP is yet another CARDANO cool pool because it is cool.  
