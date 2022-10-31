@@ -15,4 +15,9 @@ Pool id: `pool1xzfrmeux886ckdm2ekk3t3xe2ch5666m7zxa6dt0zrfm5mq2ksm`
 Ticker: `[YACP]`  
 Since: `10/27/2022 2:45:37 PM`   
 
+checkout in:  
+[cexplorer](https://cexplorer.io/pool/pool1xzfrmeux886ckdm2ekk3t3xe2ch5666m7zxa6dt0zrfm5mq2ksm)  
+[cardanoscan](https://cardanoscan.io/pool/30923de78639f58b376acdad15c4d9562f4d6b5bf08ddd356f10d3ba)  
+[pooltool](https://pooltool.io/pool/30923de78639f58b376acdad15c4d9562f4d6b5bf08ddd356f10d3ba/)  
+
 <<< EDITING IN PROGRESS >>>
