@@ -103,7 +103,6 @@ ${_NEWLINE}${_NEWLINE}${_NEWLINE}${_NEWLINE}
 ${_STRONG}| Regards. YACP team [br${_BR}] |${STRONG_}
 ${_NEWLINE}
 ________________________________
-${_NEWLINE}
 ${_ITALIC}$(date)${ITALIC_}
 ${_NEWLINE}${_NEWLINE}
 Cool Delegators give it a fire ${_FIRE}
