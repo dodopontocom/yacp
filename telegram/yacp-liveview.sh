@@ -44,6 +44,7 @@ _INFI="♾"
 _TX="📝"
 _OK="✅"
 _NOK="‼️"
+_BLOCK="⛏️"
 EPOCH_IN_SECONDS="432000"
 EPOCH_IN_HOURS="$(echo $((432000/3600)))"
 _metric_epoch="cardano_node_metrics_epoch_int"
@@ -76,17 +77,18 @@ message="
 ${_STRONG}| ${_BOT} [YACP] LIVE VIEW | version ${_VERSION}${STRONG_}${_NEWLINE}${_NEWLINE}
 ${_INFI} ${_STRONG}EPOCH ${STRONG_}
 ${_ITALIC}$(helper._curlgrep ${_metric_epoch}) ${_SPARKLING} [ending in ~${_epoch_ending_in_hours} hours]${ITALIC_}
-${_NEWLINE}${_NEWLINE}
+${_NEWLINE}
 ${_TX} ${_STRONG}Relay Status${STRONG_}${_NEWLINE}
 ${_ITALIC}${_relay_message}${ITALIC_} ${_SPARKLING}
-${_NEWLINE}${_NEWLINE}
+${_NEWLINE}
 ${_TX} ${_STRONG}Processed Transaction${STRONG_}${_NEWLINE}
 ${_ITALIC}$(helper._curlgrep ${_metric_tx})${ITALIC_} ${_SPARKLING}
-${_NEWLINE}${_NEWLINE}
+${_NEWLINE}
 ${_TX} ${_STRONG}Confirmed Produced Blocks${STRONG_}${_NEWLINE}
-${_ITALIC}${_block_in_epoch_count}/22${ITALIC_} ${_SPARKLING}
+${_BLOCK} ${_ITALIC}${_block_in_epoch_count}/22${ITALIC_} ${_SPARKLING}
+${_NEWLINE}
 ${_TX} ${_STRONG}Next Epoch Scheduled Blocks Prediction${STRONG_}${_NEWLINE}
-${_ITALIC}{{ not yet calculated }}${ITALIC_} ${_SPARKLING}
+${_ITALIC}${_BLOCK} {{ not yet calculated }}${ITALIC_} ${_SPARKLING}
 ${_NEWLINE}${_NEWLINE}${_NEWLINE}${_NEWLINE}
 ${_STRONG}| Regards. YACP team [br${_BR}] |${STRONG_}${_NEWLINE}
 _____________________________${_NEWLINE}
