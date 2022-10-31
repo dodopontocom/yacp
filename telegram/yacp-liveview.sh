@@ -30,7 +30,7 @@ helper._curlgrep(){
 
 helper.validate_vars TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_ID
 
-MESSAGE_ID="3"
+MESSAGE_ID="21"
 _STRONG="<b>"
 STRONG_="</b>"
 _ITALIC="<i>"
