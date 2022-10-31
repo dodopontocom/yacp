@@ -1,5 +1,7 @@
 ![](https://badgen.net/https/rodolfotiago.npkn.net/ada-price/)
 
+<img src="https://js.cexplorer.io/img/award/a043982e305ece1af5cfa2bb429359.png" alt="award" width="220">
+
 # [YACP] YET ANOTHER COOL POOL
 # [Official Telegram Channel] ➪ https://t.me/cardano_yacp
 
