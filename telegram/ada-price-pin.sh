@@ -56,8 +56,8 @@ _ROCKET="🚀"
 message="
 ${_STRONG}| ${_INCREASE} USD \$${price} | LIVE ADA${STRONG_}
 
-
-________________________________
+${_BOT} yes, ada price live updated in pinned message! isn't it cool?
+___________________________________
 ${_ITALIC}$(date)${ITALIC_}
 ${_NEWLINE}
 Cool Delegators give it a fire ${_FIRE}
