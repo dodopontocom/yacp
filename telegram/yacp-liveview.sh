@@ -85,26 +85,22 @@ ${_INFI} ${_STRONG}EPOCH ${STRONG_}${_ITALIC}$(helper._curlgrep ${_metric_epoch}
 ${_TX} ${_STRONG}Relay Status ${STRONG_}${_ITALIC}${_relay_message}${ITALIC_} ${_SPARKLING}
 ${_NEWLINE}
 ${_TX} ${_STRONG}Processed Transaction${STRONG_}
-${_NEWLINE}
 ${_ITALIC}$(helper._curlgrep ${_metric_tx})${ITALIC_} ${_SPARKLING}
 ${_NEWLINE}
 ${_TX} ${_STRONG}Confirmed Produced Blocks${STRONG_}
-${_NEWLINE}
 ${_BLOCK} ${_ITALIC}${_block_in_epoch_count}/22${ITALIC_} ${_SPARKLING}
 ${_NEWLINE}
 ${_TX} ${_STRONG}Stolen Blocks${STRONG_}
-${_NEWLINE}
 ${_BATTLE} ${_ITALIC}${_block_in_epoch_count} (lost in slot battle)${ITALIC_} ${_SPARKLING}
 ${_NEWLINE}
 ${_TX} ${_STRONG}Next Epoch Scheduled${STRONG_}
-${_NEWLINE}
 ${_ITALIC}${_BLOCK} {{ not yet calculated }} (Blocks Prediction)${ITALIC_} ${_SPARKLING}
 ${_NEWLINE}${_NEWLINE}${_NEWLINE}${_NEWLINE}
 ${_STRONG}| Regards. YACP team [br${_BR}] |${STRONG_}
 ${_NEWLINE}
 ________________________________
 ${_ITALIC}$(date)${ITALIC_}
-${_NEWLINE}${_NEWLINE}
+${_NEWLINE}
 Cool Delegators give it a fire ${_FIRE}
 "
 
