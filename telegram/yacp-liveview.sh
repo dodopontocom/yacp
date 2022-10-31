@@ -86,7 +86,7 @@ ${_NEWLINE}${_NEWLINE}
 ${_TX} ${_STRONG}Confirmed Produced Blocks${STRONG_}${_NEWLINE}
 ${_ITALIC}${_block_in_epoch_count}/22${ITALIC_} ${_SPARKLING}
 ${_TX} ${_STRONG}Next Epoch Scheduled Blocks Prediction${STRONG_}${_NEWLINE}
-${_ITALIC}<<not yet calculated>>${ITALIC_} ${_SPARKLING}
+${_ITALIC}{{ not yet calculated }}${ITALIC_} ${_SPARKLING}
 ${_NEWLINE}${_NEWLINE}${_NEWLINE}${_NEWLINE}
 ${_STRONG}| Regards. YACP team [br${_BR}] |${STRONG_}${_NEWLINE}
 _____________________________${_NEWLINE}
