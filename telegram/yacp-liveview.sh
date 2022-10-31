@@ -80,8 +80,8 @@ _epoch_ending_in_hours="$(echo $(((${EPOCH_IN_SECONDS} - $(helper._curlgrep ${_m
 
 message="
 ${_STRONG}| ${_BOT} [YACP] LIVE VIEW | version ${_VERSION}${STRONG_}${_NEWLINE}${_NEWLINE}
-${_INFI} ${_STRONG}EPOCH ${STRONG_}
-${_ITALIC}$(helper._curlgrep ${_metric_epoch}) ${_SPARKLING} [ends in ~${_epoch_ending_in_hours} hours]${ITALIC_}
+${_INFI} ${_STRONG}EPOCH ${STRONG_}${_ITALIC}$(helper._curlgrep ${_metric_epoch}) ${_SPARKLING}
+[ends in ~${_epoch_ending_in_hours} hours]${ITALIC_}
 ${_TX} ${_STRONG}Relay Status ${STRONG_}${_ITALIC}${_relay_message}${ITALIC_} ${_SPARKLING}
 ${_NEWLINE}
 ${_TX} ${_STRONG}Processed Transaction${STRONG_}
