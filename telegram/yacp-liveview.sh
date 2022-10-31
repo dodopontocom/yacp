@@ -49,6 +49,7 @@ _OK="✅"
 _NOK="‼️"
 _BLOCK="⛏️"
 _BATTLE="⚔️"
+_FIRE="🔥"
 EPOCH_IN_SECONDS="432000"
 EPOCH_IN_HOURS="$(echo $((432000/3600)))"
 _metric_epoch="cardano_node_metrics_epoch_int"
@@ -104,6 +105,8 @@ ${_NEWLINE}
 ________________________________
 ${_NEWLINE}
 ${_ITALIC}$(date)${ITALIC_}
+${_NEWLINE}${_NEWLINE}
+Cool Delegators give it a fire ${_FIRE}
 "
 
 # send dump message
