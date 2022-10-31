@@ -45,6 +45,7 @@ _TX="📝"
 _OK="✅"
 _NOK="‼️"
 _BLOCK="⛏️"
+_BATTLE="⚔️"
 EPOCH_IN_SECONDS="432000"
 EPOCH_IN_HOURS="$(echo $((432000/3600)))"
 _metric_epoch="cardano_node_metrics_epoch_int"
@@ -56,9 +57,9 @@ _metric_relay_on="cardano_node_metrics_connectedPeers_int"
 
 _check_relay="$(helper._curlgrep ${_metric_relay_on})"
 if [[ "${_check_relay}" -eq "1" ]]; then 
-    _relay_message="Relay online ${_OK}"
+    _relay_message="online ${_OK}"
     elif [[ "${_check_relay}" -eq "0" ]]; then
-        _relay_message="Relay offline ${_NOK}"
+        _relay_message="offline ${_NOK}"
 fi
 
 _check_is_leader_int="$(helper._curlgrep ${_metric_is_leader})"
@@ -76,10 +77,9 @@ _epoch_ending_in_hours="$(echo $(((${EPOCH_IN_SECONDS} - $(helper._curlgrep ${_m
 message="
 ${_STRONG}| ${_BOT} [YACP] LIVE VIEW | version ${_VERSION}${STRONG_}${_NEWLINE}${_NEWLINE}
 ${_INFI} ${_STRONG}EPOCH ${STRONG_}
-${_ITALIC}$(helper._curlgrep ${_metric_epoch}) ${_SPARKLING} [ending in ~${_epoch_ending_in_hours} hours]${ITALIC_}
+${_ITALIC}$(helper._curlgrep ${_metric_epoch}) ${_SPARKLING} [ends in ~${_epoch_ending_in_hours} hours]${ITALIC_}
 ${_NEWLINE}
-${_TX} ${_STRONG}Relay Status${STRONG_}${_NEWLINE}
-${_ITALIC}${_relay_message}${ITALIC_} ${_SPARKLING}
+${_TX} ${_STRONG}Relay Status ${STRONG_}${_ITALIC}${_relay_message}${ITALIC_} ${_SPARKLING}
 ${_NEWLINE}
 ${_TX} ${_STRONG}Processed Transaction${STRONG_}${_NEWLINE}
 ${_ITALIC}$(helper._curlgrep ${_metric_tx})${ITALIC_} ${_SPARKLING}
@@ -87,10 +87,13 @@ ${_NEWLINE}
 ${_TX} ${_STRONG}Confirmed Produced Blocks${STRONG_}${_NEWLINE}
 ${_BLOCK} ${_ITALIC}${_block_in_epoch_count}/22${ITALIC_} ${_SPARKLING}
 ${_NEWLINE}
+${_TX} ${_STRONG}Stolen Blocks${STRONG_}${_NEWLINE}
+${_BATTLE} ${_ITALIC}${_block_in_epoch_count} (lost in slot battle)${ITALIC_} ${_SPARKLING}
+${_NEWLINE}
 ${_TX} ${_STRONG}Next Epoch Scheduled${STRONG_}${_NEWLINE}
 ${_ITALIC}${_BLOCK} {{ not yet calculated }} (Blocks Prediction)${ITALIC_} ${_SPARKLING}
 ${_NEWLINE}${_NEWLINE}${_NEWLINE}${_NEWLINE}
-${_STRONG}| Regards. YACP team [br${_BR}] |${STRONG_}${_NEWLINE}
+${_STRONG}| Regards. <a href=https://github.com/dodopontocom/yacp#readme>YACP team [br${_BR}]</a> |${STRONG_}${_NEWLINE}
 ________________________________${_NEWLINE}
 ${_ITALIC}$(date)${ITALIC_}
 "
