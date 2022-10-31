@@ -4,6 +4,7 @@
 
 # [YACP] YET ANOTHER COOL POOL
 # [Official Telegram Channel] ➪ https://t.me/cardano_yacp
+# [Official Telegram Cool Group] ➪ [YACP - Cardano S. Pool](https://t.me/+N_cprPzi9qIwMmYx)
 
 ### Yet Another Cool Pool
 
@@ -23,5 +24,6 @@ Find out more in:
 ➪ [cexplorer](https://cexplorer.io/pool/pool1xzfrmeux886ckdm2ekk3t3xe2ch5666m7zxa6dt0zrfm5mq2ksm)  
 ➪ [cardanoscan](https://cardanoscan.io/pool/30923de78639f58b376acdad15c4d9562f4d6b5bf08ddd356f10d3ba)  
 ➪ [pooltool](https://pooltool.io/pool/30923de78639f58b376acdad15c4d9562f4d6b5bf08ddd356f10d3ba/)  
+➪ [Telegram Group open for Cool chat](https://t.me/+N_cprPzi9qIwMmYx) - [YACP] members will be cool/happy to help you!
 
 <<< EDITING IN PROGRESS >>>
