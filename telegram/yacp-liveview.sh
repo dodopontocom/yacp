@@ -95,9 +95,8 @@ ${_BATTLE} ${_ITALIC}${_block_in_epoch_count} (lost in slot battle)${ITALIC_} ${
 ${_NEWLINE}
 ${_TX} ${_STRONG}Next Epoch Scheduled${STRONG_}
 ${_ITALIC}${_BLOCK} {{ not yet calculated }} (Blocks Prediction)${ITALIC_} ${_SPARKLING}
-${_NEWLINE}${_NEWLINE}${_NEWLINE}${_NEWLINE}
+${_NEWLINE}${_NEWLINE}
 ${_STRONG}| Regards. YACP team [br${_BR}] |${STRONG_}
-${_NEWLINE}
 ________________________________
 ${_ITALIC}$(date)${ITALIC_}
 ${_NEWLINE}
