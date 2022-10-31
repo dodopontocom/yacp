@@ -96,7 +96,7 @@ ${_NEWLINE}
 ${_TX} ${_STRONG}Next Epoch Scheduled${STRONG_}${_NEWLINE}
 ${_ITALIC}${_BLOCK} {{ not yet calculated }} (Blocks Prediction)${ITALIC_} ${_SPARKLING}
 ${_NEWLINE}${_NEWLINE}${_NEWLINE}${_NEWLINE}
-${_STRONG}| Regards. <a href=https://github.com/dodopontocom/yacp#readme>YACP team [br${_BR}]</a> |${STRONG_}${_NEWLINE}
+${_STRONG}| Regards. <a href=\"https://github.com/dodopontocom/yacp#readme\">YACP team [br${_BR}]</a> |${STRONG_}${_NEWLINE}
 ________________________________${_NEWLINE}
 ${_ITALIC}$(date)${ITALIC_}
 "
