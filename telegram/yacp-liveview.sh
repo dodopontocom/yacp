@@ -93,10 +93,10 @@ ${_NEWLINE}
 ${_TX} ${_STRONG}Stolen Blocks${STRONG_}
 ${_BATTLE} ${_ITALIC}${_block_in_epoch_count} (lost in slot battle)${ITALIC_} ${_SPARKLING}
 ${_NEWLINE}
-${_TX} ${_STRONG}Next Epoch Scheduled${STRONG_}
-${_ITALIC}${_BLOCK} {{ not yet calculated }} (Blocks Prediction)${ITALIC_} ${_SPARKLING}
+${_TX} ${_STRONG}Next Epoch${STRONG_}
+${_ITALIC}${_BLOCK} {{ not yet calculated }} (blocks Prediction)${ITALIC_} ${_SPARKLING}
 ${_NEWLINE}${_NEWLINE}
-${_STRONG}| Regards. YACP team [br${_BR}] |${STRONG_}
+${_STRONG}| Be Cool ;). YACP team [br${_BR}] |${STRONG_}
 ________________________________
 ${_ITALIC}$(date)${ITALIC_}
 ${_NEWLINE}
