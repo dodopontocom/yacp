@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 export BASEDIR="$(cd $(dirname ${BASH_SOURCE[0]}) >/dev/null 2>&1 && pwd)"
+source ${BASEDIR}/../.env
 
 _VERSION="0.1 (beta)"
-
-source ${BASEDIR}/.env
 
 ######script helper functions ####################################################
 # check if required variables are exported
