@@ -14,7 +14,7 @@ It runs on Arm-Based Compute ➪ [reference](https://docs.oracle.com/en-us/iaas/
 Whats is Cardano Blockchain ➪ https://cardano.org/
 
 # [YACP] Details
-Pool id: `pool1xzfrmeux886ckdm2ekk3t3xe2ch5666m7zxa6dt0zrfm5mq2ksm`  
+Pool id: `pool1xzfrmeux886ckdm2ekk3t3xe2ch5666m7zxa6dt0zrfm5mq2ksm / 30923de78639f58b376acdad15c4d9562f4d6b5bf08ddd356f10d3ba`  
 Ticker: `[YACP]`  
 Since: `10/27/2022 2:45:37 PM`   
 Fixed fee: `340A`  
