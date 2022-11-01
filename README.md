@@ -1,7 +1,6 @@
 # [YACP] - Infrastructure
 ### Yet Another Cool Pool
 
-.  
-├── cloud               # How Pool Nodes are built and maintained in the Cloud  
-├── telegram            # Telegram scripts for Darlene [YACP] Official Bot  
-└── README.md  
+|     	|   	|   	|   	|   	|
+|---	|---	|---	|---	|---	|
+||.<br>├── cloud<br>├── telegram<br>└── README.md|# How Pool Nodes are built and maintained in the Cloud<br># Telegram scripts for Darlene [YACP] Official Bot<br># This read me file
