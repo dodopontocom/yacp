@@ -41,7 +41,7 @@ Find out more in:
 Hi, we have a branch for technical subject such as ***Node Configuration/Specs, Tech Support, Scripting, Telegram...***  
 For this, refer to our `infrastructure` branch on this repository  
 
-➪ [INFRA README](https://github.com/dodopontocom/yacp/tree/infrastructure#readme)
+➪ [infra readme](https://github.com/dodopontocom/yacp/tree/infrastructure#readme)
 
 # [YACP] Further Considerations
 
