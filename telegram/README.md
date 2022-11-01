@@ -7,13 +7,12 @@ It is a passive bot, which means it will not reply to direct messages not even i
 
 # [Darlene-bot] Skills
 
-
-<<<Editting in progress>>>
+<<< EDITING IN PROGRESS >>>
 
 # [Darlene-bot] How it works
 
-<<<Editting in progress>>>
+<<< EDITING IN PROGRESS >>>
 
 # [Darlene-bot] How to add to your channel
 
-<<<Editting in progress>>>
+<<< EDITING IN PROGRESS >>>
