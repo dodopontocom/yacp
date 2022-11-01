@@ -9,3 +9,11 @@ It is a passive bot, which means it will not reply to direct messages not even i
 
 
 <<<Editting in progress>>>
+
+# [Darlene-bot] How it works
+
+<<<Editting in progress>>>
+
+# [Darlene-bot] How to add to your channel
+
+<<<Editting in progress>>>
