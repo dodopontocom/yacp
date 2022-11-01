@@ -37,5 +37,11 @@ Find out more in:
 - [ ] Buy my father an eletric wheelchair  
 - [ ] [...]  
 
+# [YACP] For Operators (technical topic)
+Hi, we have a section for technical subject such as ***Node Configuration/Specs, Tech Support, Scripting, Telegram...***  
+For this, refer to our `infrastructure` branch on this repository  
+➪ [INFRA README](https://github.com/dodopontocom/yacp/tree/infrastructure#readme)
+
+# [YACP] Further Considerations
 
 <<< EDITING IN PROGRESS >>>
