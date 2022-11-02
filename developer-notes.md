@@ -1,4 +1,4 @@
-# [YACP] Developing Board
+# [YACP] Development Board
 
 ### Add tasks at the top
 
