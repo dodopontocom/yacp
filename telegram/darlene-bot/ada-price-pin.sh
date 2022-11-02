@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
+
 export BASEDIR="$(cd $(dirname ${BASH_SOURCE[0]}) >/dev/null 2>&1 && pwd)"
+
 [[ -f ${BASEDIR}/../.env ]] || cp ${BASEDIR}/../.env_template ${BASEDIR}/../.env
+
 source ${BASEDIR}/../.env
 
 ######script helper functions ####################################################
