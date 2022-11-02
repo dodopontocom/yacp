@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 export BASEDIR="$(cd $(dirname ${BASH_SOURCE[0]}) >/dev/null 2>&1 && pwd)"
+[[ -f ${BASEDIR}/../.env ]] || cp ${BASEDIR}/../.env_template ${BASEDIR}/../.env
 source ${BASEDIR}/../.env
 
 ######script helper functions ####################################################
@@ -12,7 +13,8 @@ helper.validate_vars() {
     result=$?
     if [[ ${result} -ne 0 ]]; then
       echo "Dependency of ${v} is missing"
-	  echo "Please, export ${v} before running the script"
+	    echo "Please, check ${v} variable in ${BASEDIR}/../.env file"
+      echo "You must fill all environment variable values"
       echo "Exiting..."
       exit -1
     fi
