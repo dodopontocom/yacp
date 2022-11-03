@@ -75,8 +75,8 @@ do
 	(
     if [[ "$(echo ${message_text[$id]%%@*} | grep "^\/" )" ]] || \
       [[ "$(echo ${channel_post_text[$id]%%@*} | grep "^\/" )" ]]; then
-      [[ ! -z ${message_text[$id]} ]] && bot.init
-      [[ ! -z ${channel_post_text[$id]} ]] && bot.init
+      [[ ! -z ${message_text[$id]} ]] && bot.init ${message_text[$id]}
+      [[ ! -z ${channel_post_text[$id]} ]] && bot.init ${channel_post_text[$id]}
     fi
 	) &
 	done
