@@ -36,7 +36,7 @@ do
   fi
 
   ticker="ADAUSDT"
-  price="USD \$$(curl -sS ${BINANCE_API}${ticker} | jq -r '.price')"
+  price="USD $(curl -sS ${BINANCE_API}${ticker} | jq -r '.price')"
   message="
   📈 ADA -> ${price}
   \n
