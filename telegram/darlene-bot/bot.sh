@@ -36,7 +36,7 @@ do
   fi
 
   ticker="ADAUSDT"
-  price="USD $(curl -sS ${BINANCE_API}${ticker} | jq -r '.price')"
+  price="USD \$$(curl -sS ${BINANCE_API}${ticker} | jq -r '.price')"
   message="
   📈 ADA -> ${price}
   \n
@@ -73,7 +73,8 @@ do
 	for id in $(ShellBot.ListUpdates)
 	do
 	(
-    if [[ "$(echo ${message_text[$id]%%@*} | grep "^\/" )" ]]; then
+    if [[ "$(echo ${message_text[$id]%%@*} | grep "^\/" )" ]] || \
+      [[ "$(echo ${channel_post_text[$id]%%@*} | grep "^\/" )" ]]; then
       bot.init ${message_text[$id]}
     fi
 	) &
