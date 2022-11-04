@@ -17,12 +17,14 @@ bot.init() {
 }
 
 bot.adaprice() {
-  local args=($@) message ticker price
+  local args=($@) message ticker price get_mess
 
   [[ ! -z ${message_chat_id[$id]} ]] && _chat_id=${message_chat_id[$id]}
   [[ ! -z ${channel_post_chat_id[$id]} ]] && _chat_id=${channel_post_chat_id[$id]}
   [[ ! -z ${channel_post_message_id[$id]} ]] && _message_id=${channel_post_message_id[$id]} && _cut_num=8
   [[ ! -z ${message_message_id[$id]} ]] && _message_id=${message_message_id[$id]} && _cut_num=7
+
+  get_mess="$(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}" | tail -1)"
 
   ticker="ADAUSDT"
   price="USD \$$(curl -sS ${BINANCE_API}${ticker} | jq -r '.price')"
@@ -41,7 +43,8 @@ bot.adaprice() {
   "
 
   if [[ ${message_chat_type[$id]} != "private" ]] && \
-    [[ ${_is_permitted} == "0" ]]; then
+    [[ ${_is_permitted} == "0" ]] && \
+    [[ ! $(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}") ]]; then
     if [[ $(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}" | tail -1 | grep -E -- "${_chat_id}\|adaprice") ]]; then
       ShellBot.editMessageText \
         --chat_id "${_chat_id}" \
@@ -74,7 +77,14 @@ bot.adaprice() {
       --chat_id ${_chat_id} \
       --text "$(echo -e ${message})" \
       --parse_mode html
-
+  
+  elif [[ $(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}") ]]; then
+    message+="Live Ada Price, is now switched off"
+    ShellBot.sendMessage \
+      --chat_id ${_chat_id} \
+      --text "$(echo -e ${message})" \
+      --parse_mode html
+    sed -i "/${get_mess}/d" ${SCRIPT_CONF}
   fi
 }
 
@@ -87,7 +97,12 @@ bot.left() {
     --chat_id ${my_chat_member_from_id[$id]} \
     --text "$(echo -e ${message})" \
     --parse_mode markdown
-    sed -i "/${get_mess}/d" ${SCRIPT_CONF}
+  
+  ShellBot.deleteMessage \
+    --chat_id ${_chat_id} \
+    --message_id "$(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}" | tail -1 | cut -d'|' -f1)"
+
+  sed -i "/${get_mess}/d" ${SCRIPT_CONF}
 }
 
 bot.new_member() {
