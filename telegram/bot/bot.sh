@@ -27,6 +27,17 @@ while :
 do
 	ShellBot.getUpdates --limit 100 --offset $(ShellBot.OffsetNext) --timeout 30
 
+	for id in $(ShellBot.ListUpdates)
+	do
+	(
+    if [[ "$(echo ${message_text[$id]%%@*} | grep "^\/" )" ]] || \
+      [[ "$(echo ${channel_post_text[$id]%%@*} | grep "^\/" )" ]]; then
+      [[ ! -z ${message_text[$id]} ]] && bot.init ${message_text[$id]}
+      [[ ! -z ${channel_post_text[$id]} ]] && bot.init ${channel_post_text[$id]}
+    fi
+	) &
+	done
+
   if [[ ! -z ${my_chat_member_new_chat_member_status[$id]} ]]; then
     case ${my_chat_member_new_chat_member_status[$id]} in
       left|kicked) bot.left ;;
@@ -54,15 +65,5 @@ do
       --text "$(echo -e ${message})" \
       --parse_mode html
   done
-
-	for id in $(ShellBot.ListUpdates)
-	do
-	(
-    if [[ "$(echo ${message_text[$id]%%@*} | grep "^\/" )" ]] || \
-      [[ "$(echo ${channel_post_text[$id]%%@*} | grep "^\/" )" ]]; then
-      [[ ! -z ${message_text[$id]} ]] && bot.init ${message_text[$id]}
-      [[ ! -z ${channel_post_text[$id]} ]] && bot.init ${channel_post_text[$id]}
-    fi
-	) &
-	done
+  
 done
