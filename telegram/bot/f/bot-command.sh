@@ -84,6 +84,11 @@ bot.adaprice() {
       --chat_id ${_chat_id} \
       --text "$(echo -e ${message})" \
       --parse_mode html
+
+    ShellBot.deleteMessage \
+    --chat_id ${_chat_id} \
+    --message_id "$(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}" | tail -1 | cut -d'|' -f1)"
+    
     sed -i "/${get_mess}/d" ${SCRIPT_CONF}
   fi
 }
@@ -97,10 +102,6 @@ bot.left() {
     --chat_id ${my_chat_member_from_id[$id]} \
     --text "$(echo -e ${message})" \
     --parse_mode markdown
-  
-  ShellBot.deleteMessage \
-    --chat_id ${_chat_id} \
-    --message_id "$(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}" | tail -1 | cut -d'|' -f1)"
 
   sed -i "/${get_mess}/d" ${SCRIPT_CONF}
 }
