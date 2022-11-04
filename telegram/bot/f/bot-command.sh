@@ -102,13 +102,15 @@ bot.adaprice() {
   elif [[ ${message_chat_type[$id]} == "private" ]]; then
     message="
     ${_BOT} Sorry, this command works only in groups/channels
-    \n\n
+    \n
+    Press /start for more information
+    \n
     ________________________________________________________
     "
     ShellBot.sendMessage \
       --chat_id ${message_from_id[$id]} \
       --text "$(echo -e ${message})" \
-      --parse_mode markdown
+      --parse_mode html
   
   elif [[ ${_is_permitted} != "0" ]]; then
     message="${_BOT} I still not permitted to perform this task\n"
@@ -167,7 +169,7 @@ bot.new_member() {
 bot.is_amdin() {
   local message
 
-  message="I am now promoted to admin on \`\"${my_chat_member_chat_title[$id]}\"\` group\n"
+  message="${_BOT} I am now promoted to admin on \`\"${my_chat_member_chat_title[$id]}\"\` group\n"
 
   ShellBot.sendMessage \
     --chat_id ${my_chat_member_from_id[$id]} \
