@@ -79,7 +79,7 @@ bot.adaprice() {
       --parse_mode html
   
   elif [[ $(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}") ]]; then
-    message+="Live Ada Price, is now turned off"
+    message="Live Ada Price, is now turned off"
     ShellBot.sendMessage \
       --chat_id ${_chat_id} \
       --text "$(echo -e ${message})" \
