@@ -38,7 +38,8 @@ do
 	) &
 	done
 
-  if [[ ! -z ${my_chat_member_new_chat_member_status[$id]} ]]; then
+  if [[ ! -z ${my_chat_member_new_chat_member_status[$id]} ]] &&
+    [[ ${my_chat_member_chat_type[$id]} != "private" ]]; then
     case ${my_chat_member_new_chat_member_status[$id]} in
       left|kicked) bot.left ;;
       "member") bot.new_member ;;
@@ -65,5 +66,5 @@ do
       --text "$(echo -e ${message})" \
       --parse_mode html
   done
-  
+
 done
