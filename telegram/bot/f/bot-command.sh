@@ -4,6 +4,9 @@
 
 _ITALIC="<i>"
 ITALIC_="</i>"
+_BOT="🤖"
+_FIRE="🔥"
+_INCREASE="📈"
 
 bot.init() {
   local args=($@)
@@ -33,7 +36,7 @@ bot.adaprice() {
   _is_permitted=$?
 
   message="
-  📈 ADA -> ${price}
+  ${_INCREASE} ADA -> ${price}
   \n
   -= LIVE ADA PRICE =-
   \n\n\n
@@ -64,26 +67,34 @@ bot.adaprice() {
     fi
   
   elif [[ ${message_chat_type[$id]} == "private" ]]; then
-    message="Sorry, this command works only in groups/channels"
+    message="
+    ${_BOT} Sorry, this command works only in groups/channels
+    \n\n
+    ________________________________________________________
+    "
     ShellBot.sendMessage \
       --chat_id ${message_from_id[$id]} \
       --text "$(echo -e ${message})" \
-      --parse_mode html
+      --parse_mode markdown
   
   elif [[ ${_is_permitted} != "0" ]]; then
-    message="I still not permitted to perform this task\n"
+    message="${_BOT} I still not permitted to perform this task\n"
     message+="Please, ask the Admins to promote me as an Admin to this group"
     ShellBot.sendMessage \
       --chat_id ${_chat_id} \
       --text "$(echo -e ${message})" \
-      --parse_mode html
+      --parse_mode markdown
   
   elif [[ $(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}") ]]; then
-    message="Live Ada Price, is now turned off"
+    message="
+    ${_BOT} Live Ada Price, is now turned off
+    \n\n
+    _________________________________________
+    "
     ShellBot.sendMessage \
       --chat_id ${_chat_id} \
       --text "$(echo -e ${message})" \
-      --parse_mode html
+      --parse_mode markdown
 
     ShellBot.deleteMessage \
     --chat_id ${_chat_id} \
@@ -96,8 +107,7 @@ bot.adaprice() {
 bot.left() {
   local message get_mess
   get_mess="$(cat ${SCRIPT_CONF} | grep -E -- "${my_chat_member_chat_id[$id]}" | tail -1)"
-  echo "_____${get_mess}"
-  message="Be aware bot has left the group \`\"${my_chat_member_chat_title[$id]}\"\`"
+  message="${_BOT} Be aware bot has left the group \`\"${my_chat_member_chat_title[$id]}\"\`"
   ShellBot.sendMessage \
     --chat_id ${my_chat_member_from_id[$id]} \
     --text "$(echo -e ${message})" \
@@ -109,7 +119,7 @@ bot.left() {
 bot.new_member() {
   local message
 
-  message="I am now added to \`\"${my_chat_member_chat_title[$id]}\"\` group\n"
+  message="${_BOT} I am now added to \`\"${my_chat_member_chat_title[$id]}\"\` group\n"
   message+="Do not forget to promote me as Admin"
 
   ShellBot.sendMessage \
