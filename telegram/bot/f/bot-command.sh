@@ -4,12 +4,16 @@
 
 _ITALIC="<i>"
 ITALIC_="</i>"
+_STRONG="<b>"
+STRONG_="</b>"
 _BOT="🤖"
 _FIRE="🔥"
 _INCREASE="📈"
 _ID="🆔"
 _SPEAKER="🗣"
 _SPARKLING="✨"
+_CODE="<pre>"
+CODE_="</pre>"
 
 bot.init() {
   local args=($@)
@@ -17,8 +21,8 @@ bot.init() {
   echo "init --- ${args[@]}"
 
   case ${args[0]} in
-    "/adaprice") bot.adaprice ${args[@]:1};;
-    "/start") bot.start ${args[@]:1};;
+    /adaprice|/adaprice@darcano_bot) bot.adaprice ${args[@]:1};;
+    /start|/start@darcano_bot) bot.start ${args[@]:1};;
   esac
   
 }
@@ -26,20 +30,25 @@ bot.init() {
 bot.start() {
   local message args=($@)
 
+  message="
+  ${_ID} @darcano_bot\n\n
+  ${_SPEAKER} Hello ${_STRONG}${message_from_first_name[$id]}!!!${STRONG_}\n
+  Welcome to the beta version!\n\n
+  ${_CODE}I am a Cardano Believer! I have the skill to give your group Ada Price updated every minute in a Pinned Message\n\n
+  1) Add @darcano_bot to your group/channel\n
+  2) In the group type /adaprice to turn it on\n
+  3) type /adaprice again to turn off\n\n${CODE_}
+  ______________________________________\n\n
+  Then you will have a pinned message with Ada Price Live Updated!\n\n
+  ${_SPARKLING}
+  "
   if [[ ${message_chat_type[$id]} == "private" ]]; then
   
-    message="${_ID} @darcano_bot\n"
-    message+="${_SPEAKER} Hello *${message_from_first_name[$id]}*!!!\n"
-    message+="Welcome to the beta version!\n"
-    message+='`I am a Cardano Believer! I have the skill to give your group Ada Price updated every minute in a Pinned Message`\n'
-    message+="Please, add me as an Admin to one of your groups and/or channels\n"
-    message+="______________________________________________\n"
-    message+="Then type /adaprice in there to see the magic! ${_SPARKLING}"
-
-  	ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+    
+  	ShellBot.sendMessage \
+      --chat_id ${message_chat_id[$id]} \
 	  	--text "$(echo -e ${message})" \
-      --parse_mode markdown
-  
+      --parse_mode html
   fi
 }
 
@@ -118,7 +127,10 @@ bot.adaprice() {
     ShellBot.sendMessage \
       --chat_id ${_chat_id} \
       --text "$(echo -e ${message})" \
-      --parse_mode markdown
+      --parse_mode html
+
+    ShellBot.unpinChatMessage \
+    --chat_id ${_chat_id}
 
     ShellBot.deleteMessage \
     --chat_id ${_chat_id} \
