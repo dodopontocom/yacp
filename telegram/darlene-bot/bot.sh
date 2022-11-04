@@ -48,29 +48,14 @@ do
   \n
   ${_ITALIC}$(date +"%t%d %b %Y %H:%M:%S")${ITALIC_}
   "
-
-  message_gone=($(cat ${SCRIPT_CONF} | grep "left" | cut -d'|' -f5))
-  if [[ ! -z ${message_gone} ]]; then
-    for g in $(echo ${message_gone[@]}); do
-      for i in $(cat ${SCRIPT_CONF} | grep -v "left" | cut -d'|' -f1,2); do
-        if [[ "$(echo ${i} | cut -d'|' -f1)" != "$(echo ${g})" ]]; then
-          ShellBot.editMessageText \
-            --chat_id "$(echo ${i} | cut -d'|' -f2)" \
-            --message_id "$(echo ${i} | cut -d'|' -f1)" \
-            --text "$(echo -e ${message})" \
-            --parse_mode html
-        fi
-      done
-    done
-  else
-    for i in $(cat ${SCRIPT_CONF} | grep -v "left" | cut -d'|' -f1,2); do
-      ShellBot.editMessageText \
-        --chat_id "$(echo ${i} | cut -d'|' -f2)" \
-        --message_id "$(echo ${i} | cut -d'|' -f1)" \
-        --text "$(echo -e ${message})" \
-        --parse_mode html
-    done
-  fi
+  
+  for i in $(cat ${SCRIPT_CONF} | cut -d'|' -f1,2); do
+    ShellBot.editMessageText \
+      --chat_id "$(echo ${i} | cut -d'|' -f2)" \
+      --message_id "$(echo ${i} | cut -d'|' -f1)" \
+      --text "$(echo -e ${message})" \
+      --parse_mode html
+  done
 
 	for id in $(ShellBot.ListUpdates)
 	do

@@ -80,13 +80,14 @@ bot.ada() {
 
 bot.left() {
   local message get_mess
-  get_mess="$(cat ${SCRIPT_CONF} | grep -E -- "${my_chat_member_chat_id[$id]}" | grep -v "left" | tail -1 | cut -d'|' -f1)"
+  get_mess="$(cat ${SCRIPT_CONF} | grep -E -- "${my_chat_member_chat_id[$id]}" | tail -1)"
+  echo "_____${get_mess}"
   message="Be aware bot has left the group \`\"${my_chat_member_chat_title[$id]}\"\`"
   ShellBot.sendMessage \
     --chat_id ${my_chat_member_from_id[$id]} \
     --text "$(echo -e ${message})" \
-    --parse_mode markdown | cut -d'|' -f2,7 \
-    | xargs -I {} echo "{}|${my_chat_member_chat_id[$id]}|left|${get_mess}|$(date +%Y%mm%dd%Hh%Mm)" >> ${SCRIPT_CONF}
+    --parse_mode markdown
+    sed -i "/${get_mess}/d" ${SCRIPT_CONF}
 }
 
 bot.new_member() {
