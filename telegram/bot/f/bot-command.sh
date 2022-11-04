@@ -28,22 +28,21 @@ bot.start() {
 
   if [[ ${message_chat_type[$id]} == "private" ]]; then
   
-    message=
-"
-${_ID} @darcano_bot
-\n
-${_SPEAKER} Hello *${message_from_first_name[$id]}*!!
-\n
-Welcome to the beta version!
-\n
-I am a Cardano Believer! I have the skill to give your group Ada Price updated every minute in a Pinned Message
+    message="
+  ${_ID} @darcano_bot
+  \n
+  ${_SPEAKER} Hello \*${message_from_first_name[$id]}\*!!
+  \n
+  Welcome to the beta version!
+  \n
+  I am a Cardano Believer! I have the skill to give your group Ada Price updated every minute in a Pinned Message
 
-Please, add me as an Admin to one of your groups and/or channels
-\n
-______________________________________________
-\n
-Then type /adaprice in there to see the magic! ${_SPARKLING}
-"
+  Please, add me as an Admin to one of your groups and/or channels
+  \n
+  ______________________________________________
+  \n
+  Then type /adaprice in there to see the magic! ${_SPARKLING}
+  "
 
 	ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
 		--text "$(echo -e ${message})" \
