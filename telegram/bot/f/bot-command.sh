@@ -39,26 +39,15 @@ Welcome to the beta version!
 I am a Cardano Believer! I have the skill to give your group Ada Price updated every minute in a Pinned Message
 
 Please, add me as an Admin to one of your groups and/or channels
-
+\n
+______________________________________________
+\n
 Then type /adaprice in there to see the magic! ${_SPARKLING}
 "
 
 	ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
 		--text "$(echo -e ${message})" \
     --parse_mode markdown
-}
-
-
-
-
-
-
-
-
-
-
-
-  
 }
 
 bot.adaprice() {
