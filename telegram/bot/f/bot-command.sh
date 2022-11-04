@@ -7,6 +7,9 @@ ITALIC_="</i>"
 _BOT="🤖"
 _FIRE="🔥"
 _INCREASE="📈"
+_ID="🆔"
+_SPEAKER="🗣"
+_SPARKLING="✨"
 
 bot.init() {
   local args=($@)
@@ -15,7 +18,46 @@ bot.init() {
 
   case ${args[0]} in
     "/adaprice") bot.adaprice ${args[@]:1};;
+    "/start") bot.start ${args[@]:1};;
   esac
+  
+}
+
+bot.start() {
+  local message args=($@)
+
+  if [[ ${message_chat_type[$id]} == "private" ]]; then
+  
+    message=
+"
+${_ID} @darcano_bot
+\n
+${_SPEAKER} Hello *${message_from_first_name[$id]}*!!
+\n
+Welcome to the beta version!
+\n
+I am a Cardano Believer! I have the skill to give your group Ada Price updated every minute in a Pinned Message
+
+Please, add me as an Admin to one of your groups and/or channels
+
+Then type /adaprice in there to see the magic! ${_SPARKLING}
+"
+
+	ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
+		--text "$(echo -e ${message})" \
+    --parse_mode markdown
+}
+
+
+
+
+
+
+
+
+
+
+
   
 }
 
