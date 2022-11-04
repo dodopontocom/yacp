@@ -11,12 +11,12 @@ bot.init() {
   echo "init --- ${args[@]}"
 
   case ${args[0]} in
-    "/ada") bot.ada ${args[@]:1};;
+    "/adaprice") bot.adaprice ${args[@]:1};;
   esac
   
 }
 
-bot.ada() {
+bot.adaprice() {
   local args=($@) message ticker price
 
   [[ ! -z ${message_chat_id[$id]} ]] && _chat_id=${message_chat_id[$id]}
@@ -42,7 +42,7 @@ bot.ada() {
 
   if [[ ${message_chat_type[$id]} != "private" ]] && \
     [[ ${_is_permitted} == "0" ]]; then
-    if [[ $(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}" | tail -1 | grep -E -- "${_chat_id}\|ada") ]]; then
+    if [[ $(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}" | tail -1 | grep -E -- "${_chat_id}\|adaprice") ]]; then
       ShellBot.editMessageText \
         --chat_id "${_chat_id}" \
         --message_id "$(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}" | tail -1 | cut -d'|' -f1)" \
@@ -53,7 +53,7 @@ bot.ada() {
         --chat_id ${_chat_id} \
         --text "$(echo -e ${message})" \
         --parse_mode html | cut -d'|' -f2,${_cut_num} \
-        | xargs -I {} echo "{}|ada|$(date +%Y%mm%dd%Hh%Mm)" >> ${SCRIPT_CONF}
+        | xargs -I {} echo "{}|adaprice|$(date +%Y%mm%dd%Hh%Mm)" >> ${SCRIPT_CONF}
 
       ShellBot.pinChatMessage \
         --chat_id "${_chat_id}" \
