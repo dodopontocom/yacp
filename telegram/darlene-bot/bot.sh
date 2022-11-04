@@ -23,6 +23,8 @@ ShellBot.init --token ${TELEGRAM_BOT_TOKEN} --monitor --flush
 _ITALIC="<i>"
 ITALIC_="</i>"
 
+
+
 while :
 do
 	ShellBot.getUpdates --limit 100 --offset $(ShellBot.OffsetNext) --timeout 30

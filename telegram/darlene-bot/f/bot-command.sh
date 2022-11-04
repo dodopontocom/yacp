@@ -19,10 +19,15 @@ bot.init() {
 bot.ada() {
   local args=($@) message ticker price
 
+  [[ ! -z ${message_chat_id[$id]} ]] && _chat_id=${message_chat_id[$id]}
+  [[ ! -z ${channel_post_chat_id[$id]} ]] && _chat_id=${channel_post_chat_id[$id]}
+  [[ ! -z ${channel_post_message_id[$id]} ]] && _message_id=${channel_post_message_id[$id]} && _cut_num=8
+  [[ ! -z ${message_message_id[$id]} ]] && _message_id=${message_message_id[$id]} && _cut_num=7
+
   ticker="ADAUSDT"
   price="USD \$$(curl -sS ${BINANCE_API}${ticker} | jq -r '.price')"
 
-  ShellBot.deleteMessage --chat_id ${message_chat_id[$id]} --message_id ${message_message_id[$id]}
+  ShellBot.deleteMessage --chat_id ${_chat_id} --message_id ${_message_id}
   _is_permitted=$?
 
   message="
@@ -37,21 +42,21 @@ bot.ada() {
 
   if [[ ${message_chat_type[$id]} != "private" ]] && \
     [[ ${_is_permitted} == "0" ]]; then
-    if [[ $(cat ${SCRIPT_CONF} | grep -E -- "${message_chat_id[$id]}" | tail -1 | grep -E -- "${message_chat_id[$id]}\|ada") ]]; then
+    if [[ $(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}" | tail -1 | grep -E -- "${_chat_id}\|ada") ]]; then
       ShellBot.editMessageText \
-        --chat_id "${message_chat_id[$id]}" \
-        --message_id "$(cat ${SCRIPT_CONF} | grep -E -- "${message_chat_id[$id]}" | tail -1 | cut -d'|' -f1)" \
+        --chat_id "${_chat_id}" \
+        --message_id "$(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}" | tail -1 | cut -d'|' -f1)" \
         --text "$(echo -e ${message})" \
         --parse_mode html
     else
       ShellBot.sendMessage \
-        --chat_id ${message_chat_id[$id]} \
+        --chat_id ${_chat_id} \
         --text "$(echo -e ${message})" \
-        --parse_mode html | cut -d'|' -f2,7 \
+        --parse_mode html | cut -d'|' -f2,${_cut_num} \
         | xargs -I {} echo "{}|ada|$(date +%Y%mm%dd%Hh%Mm)" >> ${SCRIPT_CONF}
 
       ShellBot.pinChatMessage \
-        --chat_id "${message_chat_id[$id]}" \
+        --chat_id "${_chat_id}" \
         --message_id "$(tail -1 ${SCRIPT_CONF} | cut -d'|' -f1)"
     fi
   
@@ -66,7 +71,7 @@ bot.ada() {
     message="I still not permitted to perform this task\n"
     message+="Please, ask the Admins to promote me as an Admin to this group"
     ShellBot.sendMessage \
-      --chat_id ${message_chat_id[$id]} \
+      --chat_id ${_chat_id} \
       --text "$(echo -e ${message})" \
       --parse_mode html
 
