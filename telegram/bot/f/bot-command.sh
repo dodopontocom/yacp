@@ -34,7 +34,7 @@ bot.start() {
   ${_ID} @darcano_bot\n\n
   ${_SPEAKER} Hello ${_STRONG}${message_from_first_name[$id]}!!!${STRONG_}\n
   Welcome to the beta version!\n\n
-  ${_CODE}I am a Cardano Believer! I have the skill to give your group Ada Price updated every minute in a Pinned Message\n\n
+  ${_CODE}I am a Cardano Believer! I have the skill to give your group Ada Price updated every minute in a Pinned Message (more skills to come)\n\n
   1) Add @darcano_bot to your group/channel\n
   2) In the group type /adaprice to turn it on\n
   3) type /adaprice again to turn off\n\n${CODE_}
