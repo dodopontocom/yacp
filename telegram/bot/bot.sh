@@ -5,6 +5,7 @@ export BASEDIR="$(cd $(dirname ${BASH_SOURCE[0]}) >/dev/null 2>&1 && pwd)"
   cp ${BASEDIR}/../.env_template ${BASEDIR}/../.env
 source ${BASEDIR}/../.env
 
+#load all available functions
 function_list=($(find ${BASEDIR}/f -name "*.sh"))
 for f in ${function_list[@]}; do
     source ${f}
@@ -15,17 +16,26 @@ helper.validate_vars \
   SHELLBOT_GIT_URL \
   SHELLBOT_VERSION_RAW_URL
 
-helper.get_api
+[[ -f ${BASEDIR}/ShellBot.sh ]] || helper.get_api
 
 source ${BASEDIR}/ShellBot.sh
 ShellBot.init --token ${TELEGRAM_BOT_TOKEN} --monitor --flush
 
 _ITALIC="<i>"
 ITALIC_="</i>"
+_ADA="₳"
+_INCREASE="📈"
 
 while :
 do
 	ShellBot.getUpdates --limit 100 --offset $(ShellBot.OffsetNext) --timeout 30
+
+  #check if message is older than 48hs then delete and recreate
+  for t in $(cat ${SCRIPT_CONF}); do
+    if [[ $(date +%s) -ge $(echo ${t} | rev | cut -d'|' -f1 | rev) ]]; then
+      bot.recreate_ada_message $(echo ${t} | cut -d'|' -f2) $(echo ${t} | cut -d'|' -f1)
+    fi
+  done
 
 	for id in $(ShellBot.ListUpdates)
 	do
@@ -49,8 +59,9 @@ do
 
   ticker="ADAUSDT"
   price="USD \$$(curl -sS ${BINANCE_API}${ticker} | jq -r '.price')"
+  
   message="
-  📈 ADA -> ${price}
+  ${_INCREASE} ${_ADA} -> ${price}
   \n
   -= LIVE ADA PRICE =-
   \n\n\n
