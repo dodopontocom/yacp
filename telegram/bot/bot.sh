@@ -31,11 +31,11 @@ do
 	ShellBot.getUpdates --limit 100 --offset $(ShellBot.OffsetNext) --timeout 30
 
   #check if message is older than 48hs then delete and recreate
-  for t in $(cat ${SCRIPT_CONF}); do
-    if [[ $(date +%s) -ge $(echo ${t} | rev | cut -d'|' -f1 | rev) ]]; then
-      bot.recreate_ada_message $(echo ${t} | cut -d'|' -f2) $(echo ${t} | cut -d'|' -f1)
-    fi
-  done
+  #for t in $(cat ${SCRIPT_CONF}); do
+  #  if [[ $(date +%s) -ge $(echo ${t} | rev | cut -d'|' -f1 | rev) ]]; then
+  #    bot.recreate_ada_message $(echo ${t} | cut -d'|' -f2) $(echo ${t} | cut -d'|' -f1)
+  #  fi
+  #done
 
 	for id in $(ShellBot.ListUpdates)
 	do
