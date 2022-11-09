@@ -5,8 +5,8 @@ export BASEDIR="$(cd $(dirname ${BASH_SOURCE[0]}) >/dev/null 2>&1 && pwd)"
   cp ${BASEDIR}/../.env_template ${BASEDIR}/../.env
 source ${BASEDIR}/../.env
 
-#load all available functions
-function_list=($(find ${BASEDIR}/f -name "*.sh"))
+#load all available functions (dont load functions that name start with 'underscore')
+function_list=($(find ${BASEDIR}/f -name "*.sh" | grep -v "^${BASEDIR}/f/_"))
 for f in ${function_list[@]}; do
     source ${f}
 done
