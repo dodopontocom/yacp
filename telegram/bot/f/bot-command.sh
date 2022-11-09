@@ -14,6 +14,7 @@ _SPEAKER="🗣"
 _SPARKLING="✨"
 _CODE="<pre>"
 CODE_="</pre>"
+_ADA="₳"
 
 bot.init() {
   local args=($@)
@@ -28,7 +29,7 @@ bot.init() {
 }
 
 bot.start() {
-  local message args=($@)
+  local message args=($@) 
 
   message="
   ${_ID} @darcano_bot\n\n
@@ -53,7 +54,9 @@ bot.start() {
 }
 
 bot.adaprice() {
-  local args=($@) message ticker price get_mess
+  local args=($@) message ticker price get_mess message_age_limit
+
+  message_age_limit="172000"
 
   [[ ! -z ${message_chat_id[$id]} ]] && _chat_id=${message_chat_id[$id]}
   [[ ! -z ${channel_post_chat_id[$id]} ]] && _chat_id=${channel_post_chat_id[$id]}
@@ -69,7 +72,7 @@ bot.adaprice() {
   _is_permitted=$?
 
   message="
-  ${_INCREASE} ADA -> ${price}
+  ${_INCREASE} ${_ADA} -> ${price}
   \n
   -= LIVE ADA PRICE =-
   \n\n\n
@@ -92,11 +95,12 @@ bot.adaprice() {
         --chat_id ${_chat_id} \
         --text "$(echo -e ${message})" \
         --parse_mode html | cut -d'|' -f2,${_cut_num} \
-        | xargs -I {} echo "{}|adaprice|$(date +%Y%mm%dd%Hh%Mm)" >> ${SCRIPT_CONF}
+        | xargs -I {} echo "{}|adaprice|$(date +%Y%mm%dd%Hh%Mm)|$(($(date +%s) + ${message_age_limit}))" >> ${SCRIPT_CONF}
 
       ShellBot.pinChatMessage \
         --chat_id "${_chat_id}" \
-        --message_id "$(tail -1 ${SCRIPT_CONF} | cut -d'|' -f1)"
+        --message_id "$(tail -1 ${SCRIPT_CONF} | cut -d'|' -f1)" \
+        --disable_notification "true"
     fi
   
   elif [[ ${message_chat_type[$id]} == "private" ]]; then
@@ -175,4 +179,49 @@ bot.is_amdin() {
     --chat_id ${my_chat_member_from_id[$id]} \
     --text "$(echo -e ${message})" \
     --parse_mode markdown
+}
+
+bot.recreate_ada_message() {
+  local message _chat_id _message_id get_mess message_age_limit
+
+  message_age_limit="172000"
+
+  _chat_id="${1}"
+  _message_id="${2}"
+
+  get_mess="$(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}" | tail -1)"
+
+  ticker="ADAUSDT"
+  price="USD \$$(curl -sS ${BINANCE_API}${ticker} | jq -r '.price')"
+  
+  message="
+  ${_INCREASE} ${_ADA} -> ${price}
+  \n
+  -= LIVE ADA PRICE =-
+  \n\n\n
+  ${args[@]-_____________________________}
+  \n
+  ${_ITALIC}$(date +"%t%d %b %Y %H:%M:%S")${ITALIC_}
+  "
+  
+  ShellBot.unpinChatMessage \
+    --chat_id ${_chat_id}
+
+  ShellBot.deleteMessage \
+    --chat_id "${_chat_id}" \
+    --message_id "${_message_id}"
+  
+  sed -i "/${get_mess}/d" ${SCRIPT_CONF}
+  
+  ShellBot.sendMessage \
+    --chat_id ${_chat_id} \
+    --text "$(echo -e ${message})" \
+    --parse_mode html | cut -d'|' -f2 \
+    | xargs -I {} echo "{}|${_chat_id}|adaprice|$(date +%Y%mm%dd%Hh%Mm)|$(($(date +%s) + ${message_age_limit}))" >> ${SCRIPT_CONF}
+
+  sleep 3
+  ShellBot.pinChatMessage \
+    --chat_id "${_chat_id}" \
+    --message_id "$(tail -1 ${SCRIPT_CONF} | cut -d'|' -f1)" \
+    --disable_notification "true"
 }
