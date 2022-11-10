@@ -6,6 +6,7 @@
 /usr/bin/gnuplot /home/ubuntu/db_plot.gp
 /usr/bin/gnuplot /home/ubuntu/disk_plot.gp
 /usr/bin/gnuplot /home/ubuntu/disk_available_plot.gp
+/usr/bin/gnuplot /home/ubuntu/tx_plot.gp
 
 if [[ -f "/tmp/db_plot_image.png" ]]; then
 	curl -sS https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendphoto -F chat_id=${TESTING_CHAT_ID} -F photo=@/tmp/db_plot_image.png
@@ -23,4 +24,10 @@ if [[ -f "/tmp/disk_available_plot_image.png" ]]; then
 	curl -sS https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendphoto -F chat_id=${TESTING_CHAT_ID} -F photo=@/tmp/disk_available_plot_image.png
 	rm /tmp/disk_available_plot_image.png
 	rm /home/ubuntu/.yacp-disk-available-mb
+fi
+
+if [[ -f "/tmp/tx_plot_image.png" ]]; then
+	curl -sS https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendphoto -F chat_id=${TESTING_CHAT_ID} -F photo=@/tmp/tx_plot_image.png
+	rm /tmp/disk_available_plot_image.png
+	rm /home/ubuntu/.yacp-tx
 fi
