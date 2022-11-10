@@ -102,11 +102,6 @@ ${_NEWLINE}
 Cool Delegators give it a fire ${_FIRE}
 "
 
-# send dump message
-# get bot updates
-# get message_id from this dump message
-# update MESSAGE_ID var
-
 #send to channel/group/direct
 curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/editMessageText \
 	-d chat_id=${TELEGRAM_CHAT_ID} \
