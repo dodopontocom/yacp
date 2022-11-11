@@ -32,17 +32,29 @@ helper.validate_vars TELEGRAM_BOT_TOKEN TESTING_CHAT_ID
 EPOCH_IN_SECONDS=432000
 _metric_slot_in_epoch=cardano_node_metrics_slotInEpoch_int
 
+if [[ ! -f /tmp/1min ]]; then
 if [[ $(($(date "+%s") + (${EPOCH_IN_SECONDS} - $(helper._curlgrep ${_metric_slot_in_epoch})))) -le $(($(date "+%s") + 62)) ]]; then
 	message="1 min to epoch transition"
+  touch /tmp/1min
 fi
+fi
+if [[ ! -f /tmp/5min ]]; then
 if [[ $(($(date "+%s") + (${EPOCH_IN_SECONDS} - $(helper._curlgrep ${_metric_slot_in_epoch})))) -le $(($(date "+%s") + 300)) ]]; then
 	message="5 min to epoch transition"
+  touch /tmp/5min
 fi
+fi
+if [[ ! -f /tmp/30min ]]; then
 if [[ $(($(date "+%s") + (${EPOCH_IN_SECONDS} - $(helper._curlgrep ${_metric_slot_in_epoch})))) -le $(($(date "+%s") + 1800)) ]]; then
 	message="30 min to epoch transition"
+  touch /tmp/30min
 fi
+fi
+if [[ ! -f /tmp/5h ]]; then
 if [[ $(($(date "+%s") + (${EPOCH_IN_SECONDS} - $(helper._curlgrep ${_metric_slot_in_epoch})))) -le $(($(date "+%s") + 18000)) ]]; then
 	message="5 hours to epoch transition"
+  touch /tmp/5h
+fi
 fi
 
 if [[ ! -z ${message} ]]; then
@@ -56,4 +68,8 @@ if [[ ! -z ${message} ]]; then
 	    -d chat_id=${TESTING_CHAT_ID} \
 	    -d text="far from transition" \
 	    -d parse_mode=HTML
+fi
+
+if [[ "$(date +%H%M)" == "2300" ]]; then
+  rm /tmp/1min /tmp/5min /tmp/30min /tmp/5h
 fi
