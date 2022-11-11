@@ -77,10 +77,12 @@ _epoch_ending_in_hours="$(echo $(((${EPOCH_IN_SECONDS} - $(helper._curlgrep ${_m
 #cardano-cli query leadership-schedule --mainnet --genesis ${NODE_HOME}/shelley-genesis.json \
 #	--stake-pool-id $(cat stakepoolid.txt) --vrf-signing-key-file vrf.skey --current
 
+#date -d @$(echo $(($(date "+%s") + (${EPOCH_IN_SECONDS} - $(helper._curlgrep ${_metric_slot_in_epoch}))))) "+%b %d %T"
+
 message="
 ${_STRONG}| ${_BOT} [YACP] LIVE VIEW | version ${_VERSION}${STRONG_}${_NEWLINE}${_NEWLINE}
 ${_INFI} ${_STRONG}EPOCH ${STRONG_}${_ITALIC}$(helper._curlgrep ${_metric_epoch}) ${_SPARKLING}
-[ends in ~${_epoch_ending_in_hours} hours]${ITALIC_}
+[ends in ~${_epoch_ending_in_hours} hours][$(date -d @$(echo $(($(date "+%s") + (${EPOCH_IN_SECONDS} - $(helper._curlgrep ${_metric_slot_in_epoch}))))) "+%b %d %T")]${ITALIC_}
 ${_TX} ${_STRONG}Relay Status ${STRONG_}${_ITALIC}${_relay_message}${ITALIC_} ${_SPARKLING}
 ${_NEWLINE}
 ${_TX} ${_STRONG}Processed Transaction${STRONG_}
