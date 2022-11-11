@@ -33,27 +33,27 @@ EPOCH_IN_SECONDS=432000
 _metric_slot_in_epoch=cardano_node_metrics_slotInEpoch_int
 
 if [[ $(($(date "+%s") + (${EPOCH_IN_SECONDS} - $(helper._curlgrep ${_metric_slot_in_epoch})))) -le $(($(date "+%s") + 62)) ]]; then
-	message="1 min to epoch transiction"
+	message="1 min to epoch transition"
 fi
 if [[ $(($(date "+%s") + (${EPOCH_IN_SECONDS} - $(helper._curlgrep ${_metric_slot_in_epoch})))) -le $(($(date "+%s") + 300)) ]]; then
-	message="5 min to epoch transiction"
+	message="5 min to epoch transition"
 fi
 if [[ $(($(date "+%s") + (${EPOCH_IN_SECONDS} - $(helper._curlgrep ${_metric_slot_in_epoch})))) -le $(($(date "+%s") + 1800)) ]]; then
-	message="30 min to epoch transiction"
+	message="30 min to epoch transition"
 fi
 if [[ $(($(date "+%s") + (${EPOCH_IN_SECONDS} - $(helper._curlgrep ${_metric_slot_in_epoch})))) -le $(($(date "+%s") + 18000)) ]]; then
-	message="5 hours to epoch transiction"
+	message="5 hours to epoch transition"
 fi
 
 if [[ ! -z ${message} ]]; then
 #send to channel/group/direct
   curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage \
-	  -d chat_id=${TELEGRAM_CHAT_ID} \
+	  -d chat_id=${TESTING_CHAT_ID} \
 	  -d text="${message}" \
 	  -d parse_mode=HTML
   else
     curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage \
-	    -d chat_id=${TELEGRAM_CHAT_ID} \
+	    -d chat_id=${TESTING_CHAT_ID} \
 	    -d text="far from transition" \
 	    -d parse_mode=HTML
 fi
