@@ -99,6 +99,7 @@ if [[ $(helper._curlgrep ${_metric_slot_in_epoch}) -ge 300 ]]; then
 	  rm /home/ubuntu/.yacp-disk-available-mb
     rm /tmp/disk_available_plot_image.png
 	  rm /home/ubuntu/.yacp-tx
+    rm /tmp/tx_plot_image.png
 
 fi
 
