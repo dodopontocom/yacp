@@ -48,12 +48,12 @@ fi
 if [[ ! -z ${message} ]]; then
 #send to channel/group/direct
   curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage \
-	  -d chat_id=${TELEGRAM_CHAT_ID} \
+	  -d chat_id=${TESTING_CHAT_ID} \
 	  -d text="${message}" \
 	  -d parse_mode=HTML
   else
     curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage \
-	    -d chat_id=${TELEGRAM_CHAT_ID} \
+	    -d chat_id=${TESTING_CHAT_ID} \
 	    -d text="far from transition" \
 	    -d parse_mode=HTML
 fi
