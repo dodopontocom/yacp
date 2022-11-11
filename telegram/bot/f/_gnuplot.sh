@@ -40,24 +40,16 @@ helper.validate_vars TELEGRAM_BOT_TOKEN TESTING_CHAT_ID
 
 if [[ -f "/tmp/db_plot_image.png" ]]; then
 	curl -sS https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendphoto -F chat_id=${TESTING_CHAT_ID} -F photo=@/tmp/db_plot_image.png
-	rm /tmp/db_plot_image.png
-	rm /home/ubuntu/.yacp-db
 fi
 
 if [[ -f "/tmp/disk_plot_image.png" ]]; then
 	curl -sS https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendphoto -F chat_id=${TESTING_CHAT_ID} -F photo=@/tmp/disk_plot_image.png
-	rm /tmp/disk_plot_image.png
-	rm /home/ubuntu/.yacp-disk
 fi
 
 if [[ -f "/tmp/disk_available_plot_image.png" ]]; then
 	curl -sS https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendphoto -F chat_id=${TESTING_CHAT_ID} -F photo=@/tmp/disk_available_plot_image.png
-	rm /tmp/disk_available_plot_image.png
-	rm /home/ubuntu/.yacp-disk-available-mb
 fi
 
 if [[ -f "/tmp/tx_plot_image.png" ]]; then
 	curl -sS https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendphoto -F chat_id=${TESTING_CHAT_ID} -F photo=@/tmp/tx_plot_image.png
-	rm /tmp/disk_available_plot_image.png
-	rm /home/ubuntu/.yacp-tx
 fi
