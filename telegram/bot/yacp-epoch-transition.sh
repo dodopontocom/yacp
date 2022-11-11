@@ -63,13 +63,15 @@ if [[ ! -z ${message} ]]; then
 	  -d chat_id=${TESTING_CHAT_ID} \
 	  -d text="${message}" \
 	  -d parse_mode=HTML
-  else
+  elif [[ ! -f /tmp/far ]]; then
     curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage \
 	    -d chat_id=${TESTING_CHAT_ID} \
 	    -d text="far from transition" \
 	    -d parse_mode=HTML
+
+      touch /tmp/far
 fi
 
 if [[ "$(date +%H%M)" == "2300" ]]; then
-  rm /tmp/1min /tmp/5min /tmp/30min /tmp/5h
+  rm /tmp/1min /tmp/5min /tmp/30min /tmp/5h /tmp/far
 fi
