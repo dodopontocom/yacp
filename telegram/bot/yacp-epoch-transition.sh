@@ -30,7 +30,8 @@ helper._curlgrep(){
 helper.validate_vars TELEGRAM_BOT_TOKEN TESTING_CHAT_ID
 
 EPOCH_IN_SECONDS=432000
-_metric_slot_in_epoch=cardano_node_metrics_slotInEpoch_int
+_metric_slot_in_epoch="cardano_node_metrics_slotInEpoch_int"
+_metric_epoch="cardano_node_metrics_epoch_int"
 
 if [[ $(helper._curlgrep ${_metric_slot_in_epoch}) -ge 300 ]]; then
 
