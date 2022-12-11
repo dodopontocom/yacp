@@ -10,9 +10,9 @@ jobs:
     steps:
       - id: status
         name: 'Pool status'
+        continue-on-error: true
         env:
           BODY: ${{ github.event.issue.body }}
-          WHO: ${{ github.event.issue.actor }}
         run: |
           echo ${WHO}
           if [[ $(pool_id=$(echo ${BODY} | grep -o 'pool1\S*')
@@ -23,13 +23,13 @@ jobs:
             echo "pool is registered"
             else
               echo "pool is not registered"
-              exit -1 || true
+              exit -1
           fi
       
       - id: close
         name: 'Close issue'
         uses: peter-evans/close-issue@v2
-        if: steps.status.conclusion == 'success'
+        if: steps.status.outcome == 'success'
         with:
           comment: Auto-closing issue with success
           labels: |
@@ -38,7 +38,7 @@ jobs:
       - id: close_error
         name: 'Close issue as not implemented'
         uses: peter-evans/close-issue@v2
-        if: steps.status.conclusion == 'failure'
+        if: steps.status.outcome != 'success'
         with:
           close-reason: not_planned
           comment: Auto-closing issue (probably pool not found nor registered)
