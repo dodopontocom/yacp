@@ -28,9 +28,17 @@ jobs:
         uses: peter-evans/close-issue@v2
         if: steps.status.conclusion == 'success'
         with:
-          issue-number: 1
           comment: Auto-closing issue
           labels: |
             pool_added
+      - id: close_error
+        name: 'Close issue'
+        uses: peter-evans/close-issue@v2
+        if: steps.status.conclusion == 'failure'
+        with:
+          close-reason: not_planned
+          comment: Auto-closing issue (probably pool not found nor registered)
+          labels: |
+            pool_not_added
       
     
