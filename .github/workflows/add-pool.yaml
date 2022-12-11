@@ -23,6 +23,7 @@ jobs:
             echo "pool is registered"
             else
               echo "pool is not registered"
+              exit -1
           fi
       
       - id: close
