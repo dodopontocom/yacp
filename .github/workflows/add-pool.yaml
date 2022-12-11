@@ -1,0 +1,12 @@
+name: Verify Pool
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  auto-assign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Pool status'
+        run: curl --help
