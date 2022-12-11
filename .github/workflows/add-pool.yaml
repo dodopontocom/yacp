@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: 'Pool status'
         env:
-          BODY: ${{ github.event.comment.body }}
+          BODY: ${{ github.event.body }}
         run: |
           echo ${BODY}
           curl -sS -X POST "https://api.koios.rest/api/v0/pool_info" \
