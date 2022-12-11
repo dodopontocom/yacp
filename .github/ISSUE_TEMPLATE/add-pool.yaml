@@ -8,30 +8,24 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
+        Here you can request to add your pool to term-pool.org!
   - type: input
-    id: contact
+    id: pool_bech32
     attributes:
-      label: Contact Details
-      description: How can we get in touch with you if we need more info?
-      placeholder: ex. email@example.com
+      label: Please fill in with your pool bech32 id
+      description: IF your pool is activated, it will be add to term-pool.org soon
+      placeholder: ex. pool1xzfrmeux886ckdm2ekk3t3xe2ch5666m7zxa6dt0zrfm5mq2ksm
     validations:
       required: false
   - type: dropdown
-    id: browsers
+    id: alliances
     attributes:
-      label: What browsers are you seeing the problem on?
+      label: Are you part of any cardano alliance?
       multiple: true
       options:
-        - Firefox
-        - Chrome
-        - Safari
-        - Microsoft Edge
+        - xSPA
+        - SSPA
+        - ARMADA
+        - Other
     validations:
       required: true
-  - type: textarea
-    id: logs
-    attributes:
-      label: Relevant log output
-      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
-      render: shell
