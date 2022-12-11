@@ -14,7 +14,6 @@ jobs:
         env:
           BODY: ${{ github.event.issue.body }}
         run: |
-          echo ${WHO}
           if [[ $(pool_id=$(echo ${BODY} | grep -o 'pool1\S*')
           curl -sS -X POST "https://api.koios.rest/api/v0/pool_info" \
           -H "Content-Type: application/json" \
