@@ -8,12 +8,29 @@ jobs:
   term-pool:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Pool status'
+      - id: status
+        name: 'Pool status'
         env:
           BODY: ${{ github.event.issue.body }}
         run: |
-          pool_id=$(echo ${BODY} | grep -o 'pool1\S*')
+          if [[ $(pool_id=$(echo ${BODY} | grep -o 'pool1\S*')
           curl -sS -X POST "https://api.koios.rest/api/v0/pool_info" \
           -H "Content-Type: application/json" \
           -d '{"_pool_bech32_ids":["'${pool_id}'"]}' \
-          | jq -r '.[].pool_status'
+          | jq -r '.[].pool_status') == "registered" ]]; then
+            echo "pool is registered"
+            else
+              echo "pool is not registered"
+          fi
+      
+      - id: close
+        name: 'Close issue'
+        uses: peter-evans/close-issue@v2
+        if: steps.status.conclusion == 'success'
+        with:
+          issue-number: 1
+          comment: Auto-closing issue
+          labels: |
+            pool_added
+      
+    
