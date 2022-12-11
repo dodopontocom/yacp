@@ -13,19 +13,17 @@ body:
     id: pool_bech32
     attributes:
       label: Please fill in with your pool bech32 id
-      description: IF your pool is activated, it will be add to term-pool.org soon
+      description: IF your pool is activated, it will be add to term-pool.org soon, then visit term-pool.org/<TICKER> to check it out!
       placeholder: ex. pool1xzfrmeux886ckdm2ekk3t3xe2ch5666m7zxa6dt0zrfm5mq2ksm
     validations:
-      required: false
+      required: true
   - type: dropdown
     id: alliances
     attributes:
-      label: Are you part of any cardano alliance?
+      label: Are you part of any these Cardano alliances?
       multiple: true
       options:
         - xSPA
         - SSPA
         - ARMADA
         - Other
-    validations:
-      required: true
