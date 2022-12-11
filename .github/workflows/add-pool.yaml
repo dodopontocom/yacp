@@ -50,7 +50,7 @@ jobs:
         uses: peter-evans/close-issue@v2
         if: steps.status.outcome == 'success'
         with:
-          comment: Auto-closing issue with success
+          comment: Poll added. Verify - https://github.com/dodopontocom/yacp/blob/infrastructure/pool.csv
           labels: |
             pool_added
             
@@ -60,8 +60,6 @@ jobs:
         if: steps.status.outcome != 'success'
         with:
           close-reason: not_planned
-          comment: Auto-closing issue (probably pool not found nor registered)
+          comment: Probably pool not found nor registered. Maybe api was unavailable, please try later again
           labels: |
             pool_not_added
-      
-    
