@@ -18,16 +18,25 @@ jobs:
         env:
           BODY: ${{ github.event.issue.body }}
         run: |
-          if [[ $(pool_id=$(echo ${BODY} | grep -o 'pool1\S*')
-          curl -sS -X POST "https://api.koios.rest/api/v0/pool_info" \
-          -H "Content-Type: application/json" \
-          -d '{"_pool_bech32_ids":["'${pool_id}'"]}' \
-          | jq -r '.[].pool_status') == "registered" ]]; then
-            echo "pool is registered"
-            echo "${BODY} | grep -o 'pool1\S*'" >> pool.csv
+          pool_id=$(echo ${BODY} | grep -o 'pool1\S*')
+          if [[ ! $(cat pool.csv | grep ${pool_id}) ]]; then
+            if [[ $(curl -sS -X POST "https://api.koios.rest/api/v0/pool_info" \
+              -H "Content-Type: application/json" \
+              -d '{"_pool_bech32_ids":["'${pool_id}'"]}' \
+              | jq -r '.[].pool_status') == "registered" ]]; then
+              echo "pool is registered"
+              ticker=$(curl -sS -X POST "https://api.koios.rest/api/v0/pool_info" \
+              -H "Content-Type: application/json" \
+              -d '{"_pool_bech32_ids":["'${pool_id}'"]}' \
+              | jq -r '.[].meta_json.ticker')
+              echo "${BODY} | grep -o 'pool1\S*',${ticker}" >> pool.csv
+              else
+                echo "pool is not registered on Cardano mainnet"
+                exit -1
+            fi
             else
-              echo "pool is not registered"
-              exit -1
+                echo "pool is already added"
+                exit -1
           fi
       - name: "commit"
         uses: EndBug/add-and-commit@v9
