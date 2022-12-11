@@ -12,8 +12,8 @@ jobs:
         env:
           BODY: ${{ github.event.issue.body }}
         run: |
-          echo ${BODY}
+          echo ${BODY} | grep -o 'pool1\S*'
           curl -sS -X POST "https://api.koios.rest/api/v0/pool_info" \
           -H "Content-Type: application/json" \
-          -d '{"_pool_bech32_ids":["pool1xzfrmeux886ckdm2ekk3t3xe2ch5666m7zxa6dt0zrfm5mq2ksm"]}' \
+          -d '{"_pool_bech32_ids":[$(echo '${BODY}' | grep -o 'pool1\S*')]}' \
           | jq -r '.[].pool_status'
