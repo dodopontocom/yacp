@@ -5,11 +5,14 @@ on:
     types: [opened]
 
 jobs:
-  auto-assign:
+  term-pool:
     runs-on: ubuntu-latest
     steps:
       - name: 'Pool status'
+        env:
+          BODY: ${{ github.event.comment.body }}
         run: |
+          echo ${BODY}
           curl -sS -X POST "https://api.koios.rest/api/v0/pool_info" \
           -H "Content-Type: application/json" \
           -d '{"_pool_bech32_ids":["pool1xzfrmeux886ckdm2ekk3t3xe2ch5666m7zxa6dt0zrfm5mq2ksm"]}' \
