@@ -29,7 +29,7 @@ jobs:
               -H "Content-Type: application/json" \
               -d '{"_pool_bech32_ids":["'${pool_id}'"]}' \
               | jq -r '.[].meta_json.ticker')
-              echo "${BODY} | grep -o 'pool1\S*',${ticker}" >> pool.csv
+              echo ${BODY} | grep -o 'pool1\S*',${ticker} >> pool.csv
               else
                 echo "pool is not registered on Cardano mainnet"
                 exit -1
