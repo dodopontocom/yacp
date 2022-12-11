@@ -12,7 +12,9 @@ jobs:
         name: 'Pool status'
         env:
           BODY: ${{ github.event.issue.body }}
+          WHO: ${{ github.event.issue.actor }}
         run: |
+          echo ${WHO}
           if [[ $(pool_id=$(echo ${BODY} | grep -o 'pool1\S*')
           curl -sS -X POST "https://api.koios.rest/api/v0/pool_info" \
           -H "Content-Type: application/json" \
@@ -28,11 +30,12 @@ jobs:
         uses: peter-evans/close-issue@v2
         if: steps.status.conclusion == 'success'
         with:
-          comment: Auto-closing issue
+          comment: Auto-closing issue with success
           labels: |
             pool_added
+            
       - id: close_error
-        name: 'Close issue'
+        name: 'Close issue as not implemented'
         uses: peter-evans/close-issue@v2
         if: steps.status.conclusion == 'failure'
         with:
