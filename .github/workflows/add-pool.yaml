@@ -9,4 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Pool status'
-        run: curl --help
+        run: |
+          curl -sS -X POST "https://api.koios.rest/api/v0/pool_info" \
+          -H "Content-Type: application/json" \
+          -d '{"_pool_bech32_ids":["pool1xzfrmeux886ckdm2ekk3t3xe2ch5666m7zxa6dt0zrfm5mq2ksm"]}' \
+          | jq -r '.[].pool_status'
