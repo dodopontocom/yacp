@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Convert issue body to json
     outputs:
-      json-payload: ${{ steps.payload.outputs.json_end }}
+      payload-parsed: ${{ steps.payload.outputs.json_var }}
     steps:
       - name: Run parser
-        id: to-json
+        id: parse
         uses: peter-murray/issue-forms-body-parser@v2.0.0
         with:
           issue_id: ${{ github.event.issue.number }}
@@ -21,9 +21,9 @@ jobs:
           label_marker_end: '<<'
       - name: Set Output
         id: payload
-        run: echo ::set-output name=json_end::'${{ steps.to-json.outputs.payload }}'
+        run: echo ::set-output name=json_var::'${{ steps.parse.outputs.payload }}'
       - name: Print
-        run: echo "${{ toJson(steps.payload.outputs.json_end) }}"
+        run: echo "${{ toJson(steps.payload.outputs.json_var) }}"
 
   term-pool:
     runs-on: ubuntu-latest
