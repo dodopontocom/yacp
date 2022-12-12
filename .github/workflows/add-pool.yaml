@@ -21,7 +21,7 @@ jobs:
           label_marker_end: '<<'
       - name: Set Output
         id: payload
-        run: echo ::set-output name=json_var::'${{ steps.parse.outputs.payload }}'
+        run: echo json_var='${{ steps.parse.outputs.parse }}'
       - name: Print
         run: echo "${{ toJson(steps.payload.outputs.json_var) }}"
 
