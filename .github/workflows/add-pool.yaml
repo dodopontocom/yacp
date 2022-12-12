@@ -6,7 +6,7 @@ on:
 
 jobs:
   issue-to-json:
-    if: contains(github.event.issue.labels.*.name, 'pool1.*')
+    if: contains(github.event.issue.labels.*.name)
     runs-on: ubuntu-latest
     name: Convert issue body to json
     outputs:
@@ -27,7 +27,7 @@ jobs:
         run: echo json_var='${{ steps.parse.outputs.payload }}' >> $GITHUB_OUTPUT
 
   term-pool:
-    if: contains(github.event.issue.labels.*.name, 'pool1.*')
+    if: contains(github.event.issue.labels.*.name)
     runs-on: ubuntu-latest
     needs: issue-to-json
     name: Execute Pool add Pipeline
