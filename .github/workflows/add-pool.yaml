@@ -25,6 +25,21 @@ jobs:
       - name: Print
         run: echo "${{ toJson(steps.payload.outputs.json_var) }}"
 
+  test-json:
+    runs-on: ubuntu-latest
+    name: Get Json values
+    needs: issue-to-json
+    with:
+      pool_bech32_id: ${{ fromJson(needs.issue-to-json.outputs.payload-parsed)['pool_bech32_id'] }}
+      cardano_alliances: ${{ fromJson(needs.issue-to-json.outputs.payload-parsed)['cardano_alliances'] }}
+
+    steps:
+      - name: Print values
+        run: |
+          echo "#################"
+          echo "${pool_bech32_id}"
+          echo "${cardano_alliances}"
+          
   term-pool:
     runs-on: ubuntu-latest
     steps:
