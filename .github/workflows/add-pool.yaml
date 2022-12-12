@@ -21,7 +21,7 @@ jobs:
           label_marker_end: '<<'
       - name: Set Output
         id: payload
-        run: echo json_var='${{ steps.parse.outputs.parse }}'
+        run: echo json_var='${{ steps.parse.outputs.parse }}' >> $GITHUB_OUTPUT
       - name: Print
         run: echo "${{ toJson(steps.payload.outputs.json_var) }}"
 
