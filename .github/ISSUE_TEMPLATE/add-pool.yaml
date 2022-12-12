@@ -1,7 +1,7 @@
 name: add-pool
 description: Add your Pool to term-pool.org
 title: "[add-pool]: "
-labels: ["new", "request"]
+labels: ["new-request"]
 assignees:
   - dodopontocom
 body:
