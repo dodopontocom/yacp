@@ -2,9 +2,28 @@ name: Verify Pool
 
 on:
   issues:
-    types: [opened]
+    types: [opened, reopened]
 
 jobs:
+  issue-to-json:
+    runs-on: ubuntu-latest
+    name: Convert issue body to json
+    outputs:
+      json-payload: ${{ steps.payload.outputs.json_end }}
+    steps:
+      - name: Run parser
+        id: to-json
+        uses: peter-murray/issue-forms-body-parser@v2.0.0
+        with:
+          separator: '###'
+          label_marker_start: '>>'
+          label_marker_end: '<<'
+      - name: Set Output
+        id: payload
+        run: echo ::set-output name=json_end::'${{ steps.to-json.outputs.payload }}'
+      - name: Print
+        run: echo "${{ toJson(steps.payload.outputs.json_end) }}"
+
   term-pool:
     runs-on: ubuntu-latest
     steps:
@@ -17,9 +36,7 @@ jobs:
         continue-on-error: true
         env:
           BODY: ${{ github.event.issue.body }}
-          _POOL_ID: ${{ toJSON(github.event.issue.body) }}
         run: |
-          echo "${_POOL_ID}" | jq
           pool_id=$(echo ${BODY} | grep -o 'pool1\S*')
           if [[ ! $(cat pool.csv | grep ${pool_id}) ]]; then
             if [[ $(curl -sS -X POST "https://api.koios.rest/api/v0/pool_info" \
