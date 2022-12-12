@@ -32,7 +32,7 @@ jobs:
     
     steps:
       - name: Print values
-        with:
+        env:
           pool_bech32_id: ${{ fromJson(needs.issue-to-json.outputs.payload-parsed)['pool_bech32_id'] }}
           cardano_alliances: ${{ fromJson(needs.issue-to-json.outputs.payload-parsed)['cardano_alliances'] }}
         run: |
