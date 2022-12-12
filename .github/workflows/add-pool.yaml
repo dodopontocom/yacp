@@ -17,9 +17,9 @@ jobs:
         continue-on-error: true
         env:
           BODY: ${{ github.event.issue.body }}
-          POOL_ID: ${{ github.event.inputs }}
+          _POOL_ID: ${{ toJSON(github.event.issue.body) }}
         run: |
-          echo "oi --> ${POOL_ID}"
+          echo "${_POOL_ID}" | jq
           pool_id=$(echo ${BODY} | grep -o 'pool1\S*')
           if [[ ! $(cat pool.csv | grep ${pool_id}) ]]; then
             if [[ $(curl -sS -X POST "https://api.koios.rest/api/v0/pool_info" \
