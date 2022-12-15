@@ -92,7 +92,8 @@ jobs:
     steps:
       - name: Send test notification to Discord Channel
         run: |
+          url="test"
           curl -X POST https://discord.com/api/channels/1043461795626631269/messages \
           -H "Authorization: Bot ${ODROID_DISCORD_BTOKEN}" \
           -H "Content-Type:application/json" --data \
-          '{"content": "###############################\n\nPool Added Successfully to xSPA\n\n###############################"}'
+          '{"content": "###############################\n\nPool Added Successfully to xSPA\n check: '${url}'\n\n###############################"}'
