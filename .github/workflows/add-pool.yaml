@@ -62,15 +62,7 @@ jobs:
             fi
             else
                 echo "pool is already added"
-                exit -1
           fi
-
-      - name: "commit"
-        uses: EndBug/add-and-commit@v9
-        with:
-          message: add new pool
-          committer_name: GitHub Actions
-          committer_email: actions@github.com
       
       - id: close
         name: 'Close issue'
@@ -90,3 +82,15 @@ jobs:
           comment: Probably pool not found nor registered. Maybe api was unavailable, please try later again
           labels: |
             pool_not_added
+  
+  send-notification:
+    runs-on: ubuntu-latest
+    name: Send test notification to Discord Channel
+    needs: term-pool
+    steps:
+      - name: Send ok
+        run: |
+          _message="Pool Added Successfully to xSPA"
+          curl -X POST https://discord.com/api/channels/1043461795626631269/messages \
+          -H "Authorization: Bot ${ODROID_DISCORD_BTOKEN}" \
+          -H "Content-Type:application/json" --data '{"content": "Pool Added Successfully to xSPA"}'
