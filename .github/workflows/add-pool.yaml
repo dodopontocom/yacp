@@ -87,6 +87,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Send test notification to Discord Channel
     needs: term-pool
+    env:
+        ODROID_DISCORD_BTOKEN: ${{secrets.ODROID_DISCORD_BTOKEN}}
     steps:
       - name: Send ok
         run: |
