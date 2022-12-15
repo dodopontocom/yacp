@@ -96,4 +96,4 @@ jobs:
           _message+="###############################"
           curl -X POST https://discord.com/api/channels/1043461795626631269/messages \
           -H "Authorization: Bot ${ODROID_DISCORD_BTOKEN}" \
-          -H "Content-Type:application/json" --data '{"content": "$(echo -e '${_message}')"}'
+          -H "Content-Type:application/json" --data '{"content": "'${_message}'"}'
