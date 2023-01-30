@@ -28,9 +28,9 @@ Find out more in:
 # [YACP] Motivations/Causes/Missions/Commitments
 - [x] Be cool and engaged to Cardano Ecosystem  
 - [x] Be a member of https://www.xspo-alliance.org/  
-- [ ] Be a member of https://armada-alliance.com/  
+- [x] Be a member of https://armada-alliance.com/  
 - [x] Be always a Single Pool Operator  
-- [ ] Participate on xSPO Rotating Delegation  
+- [x] Participate on xSPO Rotating Delegation  
 - [ ] Develop and maintain cool Telegram bots/scripts to help Pool Operators  
 - [ ] Participate on social work for donation part of Pool's profit  
 - [ ] Buy my father an eletric wheelchair  
