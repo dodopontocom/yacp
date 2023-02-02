@@ -28,3 +28,7 @@ button.close_btn {
     padding: 16px 20px;
     text-transform: uppercase;
 }
+
+small {
+    font-size: 12px;
+}
