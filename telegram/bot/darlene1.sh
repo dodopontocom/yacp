@@ -19,7 +19,8 @@ helper.validate_vars \
 [[ -f ${BASEDIR}/ShellBot.sh ]] || helper.get_api
 
 source ${BASEDIR}/ShellBot.sh
-ShellBot.init --token ${TELEGRAM_BOT_TOKEN} --monitor --flush
+#ShellBot.init --token ${TELEGRAM_BOT_TOKEN} --monitor --flush
+ShellBot.init --token ${TELEGRAM_BOT_TOKEN} --flush
 
 _ITALIC="<i>"
 ITALIC_="</i>"

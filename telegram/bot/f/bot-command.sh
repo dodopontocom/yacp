@@ -22,8 +22,8 @@ bot.init() {
   echo "init --- ${args[@]}"
 
   case ${args[0]} in
-    /adaprice|/adaprice@darcano_bot) bot.adaprice ${args[@]:1};;
-    /start|/start@darcano_bot) bot.start ${args[@]:1};;
+    /adaprice|/adaprice@darlene1_bot) bot.adaprice ${args[@]:1};;
+    /start|/start@darlene1_bot) bot.start ${args[@]:1};;
   esac
   
 }
@@ -32,11 +32,11 @@ bot.start() {
   local message args=($@) 
 
   message="
-  ${_ID} @darcano_bot\n\n
+  ${_ID} @darlene1_bot\n\n
   ${_SPEAKER} Hello ${_STRONG}${message_from_first_name[$id]}!!!${STRONG_}\n
   Welcome to the beta version!\n\n
   ${_CODE}I am a Cardano Believer! I have the skill to give your group Ada Price updated every minute in a Pinned Message (more skills to come)\n\n
-  1) Add @darcano_bot AS ADMIN to your group/channel\n
+  1) Add @darlene1_bot AS ADMIN to your group/channel\n
   2) In the group type /adaprice to turn it on\n\n
   ***) type /adaprice again to turn off\n\n${CODE_}
   ______________________________________\n\n
