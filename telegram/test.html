@@ -26,6 +26,14 @@
 
 <body>
 <section>
+
+    <h1 id="greeting"></h1>
+
+    <h3>Init Data: </h3>
+    <pre id="initData"></pre>
+    <h3>Init Data (unsafe): </h3>
+    <pre id="initDataUnsafe"></pre>
+
     <div id="buttons">
         <button id="btnNativePopup" onclick="sendTime();">TEST</button>
         <small>(The bot will recieve a message with filled <code>web_app_data</code> field)</small>
@@ -43,6 +51,15 @@
     document.querySelector('#initData').innerHTML = JSON.stringify(initData, null, 2);
     document.querySelector('#initDataUnsafe').innerHTML = JSON.stringify(initDataUnsafe, null, 2);
     document.querySelector('#themeData').html(JSON.stringify(Telegram.WebApp.themeParams, null, 2));
+
+    Telegram.WebApp.MainButton
+        .setText('BYE')
+        .show()
+        .onClick(function(){ webviewClose(); });
+
+    Telegram.WebApp.onEvent('themeChanged', function() {
+        document.querySelector('#themeData').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
+    });
 
     function sendTime() {
         Telegram.WebApp.sendData(new Date().toString());
