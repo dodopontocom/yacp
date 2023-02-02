@@ -27,7 +27,7 @@
 <body>
 <section>
     <div id="buttons">
-        <button id="btnTime" onclick="sendTime();">Send time</button>
+        <button id="btnNativePopup" onclick="sendNativePopup();">POP UP</button>
         <small>(The bot will recieve a message with filled <code>web_app_data</code> field)</small>
     </div>
 
@@ -35,6 +35,14 @@
 
 <script type="application/javascript">
     Telegram.WebApp.ready();
+
+    const initData = Telegram.WebApp.initData || '';
+    const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
+
+    document.querySelector('#greeting').innerHTML = `Hi, ${initDataUnsafe.user.first_name}!`;
+    document.querySelector('#initData').innerHTML = JSON.stringify(initData, null, 2);
+    document.querySelector('#initDataUnsafe').innerHTML = JSON.stringify(initDataUnsafe, null, 2);
+    document.querySelector('#themeData').html(JSON.stringify(Telegram.WebApp.themeParams, null, 2));
 
     function sendTime() {
         Telegram.WebApp.sendData(new Date().toString());
