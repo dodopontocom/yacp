@@ -15,13 +15,21 @@
     <script type="text/javascript" src="https://telegram.org/js/telegram-web-app.js"></script>
     <script type="text/javascript" src="matter.min.js"></script>
     <script defer type="text/javascript" src="script.js"></script>
-
     <link rel="stylesheet" type="text/css" media="all" href="https://dodopontocom.github.io/yacp/telegram/webapps/style.css">
+
+    <script>
+        function setThemeClass() {
+            document.documentElement.className = Telegram.WebApp.colorScheme;
+        }
+        Telegram.WebApp.onEvent('themeChanged', setThemeClass);
+        setThemeClass();
+    </script>
+
 </head>
 
 <body>
     <section>
-        <!-- <img src="https://dodopontocom.github.io/yacp/telegram/logo.gif" width="35%"> -->
+        <img src="https://dodopontocom.github.io/yacp/telegram/logo.gif" width="35%">
 
     </section>
 
