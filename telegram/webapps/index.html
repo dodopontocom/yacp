@@ -30,8 +30,19 @@
 <body>
     <section>
         <img src="https://dodopontocom.github.io/yacp/telegram/logo.gif" width="35%">
-
+        <div id="buttons">
+            <button onclick="webviewExpand();">Expand Webview</button>
+            <small>(The window goes fullscreen)</small>
+            <button onclick="toggleMainButton(this);">Hide Main Button</button>
+            <small>(It hides/shows main button)</small>
+            <button id="btnTime" onclick="sendTime(10);">Send time</button>
+            <small>(The bot will recieve a message with filled <code>web_app_data</code> field)</small>
+        </div>
     </section>
 
+
+
+    <!---->
+    <script type="application/javascript" src="telegram.js"></script>
 </body>
 </html>
