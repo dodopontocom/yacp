@@ -13,18 +13,38 @@ _SPARKLING="✨"
 _CODE="<pre>"
 CODE_="</pre>"
 _ADA="₳"
+_BR="🇧🇷" # br flag
+
+be_cool() {
+    echo "${_STRONG}.:| Be Cool ;). YACP team [br${_BR}] |:.${STRONG_}"
+}
 
 bot.string.start_message() {
     echo "
 ${_ID} @darlene1_bot\n\n
-${_SPEAKER} Hello ${_STRONG}${message_from_first_name[$id]}!!!${STRONG_}\n
-Welcome to the beta version!\n\n
-${_CODE}I am a Cardano Believer! I have the skill to give your group Ada Price updated every minute in a Pinned Message (more skills to come)\n\n
-1) Add @darlene1_bot AS ADMIN to your group/channel\n
-2) In the group type /adaprice to turn it on\n\n
-***) type /adaprice again to turn off\n\n${CODE_}
-______________________________________\n\n
-Then you will have a pinned message with Ada Price Live Updated!\n\n
+${_SPEAKER} Hello ${_STRONG}${message_from_first_name[$id]}!!!${STRONG_}
+\n\n
+Welcome to this bot beta version!\n\n
+$(be_cool)
+\n
+${_CODE}
+I am a Cardano Believer! I have some skills all related to Cardano Ecosystem
+\n
+Check it out:
+${CODE_}
+\n
+/adaprice - sends live Ada price to groups in a pinned message ***
+\n
+/postadaprice - generates a random cool tweet based on Ada price topic (it uses chatGPT)
+\n
+/tweet - generates a random cool tweet based on Cardano most recent news (it uses chatGPT)
+\n\n
+*** commands work better in groups or channels (must add this bot as admin)
+\n\n
+______________________________________
+\n\n
+${_STRONG}More skills to come!!!${STRONG_}
+\n\n
 ${_SPARKLING}
 "
 }
@@ -41,6 +61,9 @@ ${_INCREASE} ${_ADA} -> ${price}
 ${args[@]-_____________________________}
 \n
 ${_ITALIC} $(date +"%t%d %b %Y %H:%M:%S") UTC ${ITALIC_}
+\n
+\n
+$(be_cool)
 "
 }
 
@@ -56,6 +79,9 @@ ${_INCREASE} ${_ADA} -> ${price}
 ${args[@]-_____________________________}
 \n
 ${_ITALIC} $(date +"%t%d %b %Y %H:%M:%S") UTC ${ITALIC_}
+\n
+\n
+$(be_cool)
 "
 }
 
