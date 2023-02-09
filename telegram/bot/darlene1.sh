@@ -6,7 +6,7 @@ export BASEDIR="$(cd $(dirname ${BASH_SOURCE[0]}) >/dev/null 2>&1 && pwd)"
 source ${BASEDIR}/../.env
 
 #load all available functions (dont load functions that name start with 'underscore')
-function_list=($(find ${BASEDIR}/f -name "*.sh" | grep -v "^${BASEDIR}/f/_"))
+function_list=($(find ${BASEDIR}/functions -name "*.sh" | grep -v "^${BASEDIR}/functions/_"))
 for f in ${function_list[@]}; do
     source ${f}
 done
@@ -19,24 +19,14 @@ helper.validate_vars \
 [[ -f ${BASEDIR}/ShellBot.sh ]] || helper.get_api
 
 source ${BASEDIR}/ShellBot.sh
-#ShellBot.init --token ${TELEGRAM_BOT_TOKEN} --monitor --flush
-ShellBot.init --token ${TELEGRAM_BOT_TOKEN} --flush
-
-_ITALIC="<i>"
-ITALIC_="</i>"
-_ADA="₳"
-_INCREASE="📈"
+ShellBot.init --token ${TELEGRAM_BOT_TOKEN} --monitor --flush
 
 while :
 do
 	ShellBot.getUpdates --limit 100 --offset $(ShellBot.OffsetNext) --timeout 30
 
   #check if message is older than 48hs then delete and recreate
-  #for t in $(cat ${SCRIPT_CONF}); do
-  #  if [[ $(date +%s) -ge $(echo ${t} | rev | cut -d'|' -f1 | rev) ]]; then
-  #    bot.recreate_ada_message $(echo ${t} | cut -d'|' -f2) $(echo ${t} | cut -d'|' -f1)
-  #  fi
-  #done
+  #use this in case needed in the future ---> bot.recreate_ada_message
 
 	for id in $(ShellBot.ListUpdates)
 	do
@@ -58,18 +48,7 @@ do
     esac
   fi
 
-  ticker="ADAUSDT"
-  price="USD \$$(curl -sS ${BINANCE_API}${ticker} | jq -r '.price')"
-  
-  message="
-  ${_INCREASE} ${_ADA} -> ${price}
-  \n
-  -= LIVE ADA PRICE =-
-  \n\n\n
-  ${args[@]-_____________________________}
-  \n
-  ${_ITALIC}$(date +"%t%d %b %Y %H:%M:%S")${ITALIC_}
-  "
+  message=$(bot.string.pinned_message)
   
   for i in $(cat ${SCRIPT_CONF} | cut -d'|' -f1,2); do
     ShellBot.editMessageText \

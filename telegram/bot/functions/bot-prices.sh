@@ -1,58 +1,5 @@
 #!/bin/bash
 
-# Init commands
-
-_ITALIC="<i>"
-ITALIC_="</i>"
-_STRONG="<b>"
-STRONG_="</b>"
-_BOT="🤖"
-_FIRE="🔥"
-_INCREASE="📈"
-_ID="🆔"
-_SPEAKER="🗣"
-_SPARKLING="✨"
-_CODE="<pre>"
-CODE_="</pre>"
-_ADA="₳"
-
-bot.init() {
-  local args=($@)
-
-  echo "init --- ${args[@]}"
-
-  case ${args[0]} in
-    /adaprice|/adaprice@darlene1_bot) bot.adaprice ${args[@]:1};;
-    /start|/start@darlene1_bot) bot.start ${args[@]:1};;
-  esac
-  
-}
-
-bot.start() {
-  local message args=($@) 
-
-  message="
-  ${_ID} @darlene1_bot\n\n
-  ${_SPEAKER} Hello ${_STRONG}${message_from_first_name[$id]}!!!${STRONG_}\n
-  Welcome to the beta version!\n\n
-  ${_CODE}I am a Cardano Believer! I have the skill to give your group Ada Price updated every minute in a Pinned Message (more skills to come)\n\n
-  1) Add @darlene1_bot AS ADMIN to your group/channel\n
-  2) In the group type /adaprice to turn it on\n\n
-  ***) type /adaprice again to turn off\n\n${CODE_}
-  ______________________________________\n\n
-  Then you will have a pinned message with Ada Price Live Updated!\n\n
-  ${_SPARKLING}
-  "
-  if [[ ${message_chat_type[$id]} == "private" ]]; then
-  
-    
-  	ShellBot.sendMessage \
-      --chat_id ${message_chat_id[$id]} \
-	  	--text "$(echo -e ${message})" \
-      --parse_mode html
-  fi
-}
-
 bot.adaprice() {
   local args=($@) message ticker price get_mess message_age_limit
 
@@ -65,21 +12,10 @@ bot.adaprice() {
 
   get_mess="$(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}" | tail -1)"
 
-  ticker="ADAUSDT"
-  price="USD \$$(curl -sS ${BINANCE_API}${ticker} | jq -r '.price')"
-
   ShellBot.deleteMessage --chat_id ${_chat_id} --message_id ${_message_id}
   _is_permitted=$?
 
-  message="
-  ${_INCREASE} ${_ADA} -> ${price}
-  \n
-  -= LIVE ADA PRICE =-
-  \n\n\n
-  ${args[@]-_____________________________}
-  \n
-  ${_ITALIC}$(date +"%t%d %b %Y %H:%M:%S")${ITALIC_}
-  "
+  message=$(bot.string.pinned_message)
 
   if [[ ${message_chat_type[$id]} != "private" ]] && \
     [[ ${_is_permitted} == "0" ]] && \
@@ -97,6 +33,7 @@ bot.adaprice() {
         --parse_mode html | cut -d'|' -f2,${_cut_num} \
         | xargs -I {} echo "{}|adaprice|$(date +%Y%mm%dd%Hh%Mm)|$(($(date +%s) + ${message_age_limit}))" >> ${SCRIPT_CONF}
 
+      sleep 3
       ShellBot.pinChatMessage \
         --chat_id "${_chat_id}" \
         --message_id "$(tail -1 ${SCRIPT_CONF} | cut -d'|' -f1)" \
@@ -104,32 +41,24 @@ bot.adaprice() {
     fi
   
   elif [[ ${message_chat_type[$id]} == "private" ]]; then
-    message="
-    ${_BOT} Sorry, this command works only in groups/channels
-    \n
-    Press /start for more information
-    \n
-    ________________________________________________________
-    "
+    message=$(bot.string.message_when_private)
+
     ShellBot.sendMessage \
       --chat_id ${message_from_id[$id]} \
       --text "$(echo -e ${message})" \
       --parse_mode html
   
   elif [[ ${_is_permitted} != "0" ]]; then
-    message="${_BOT} I still not permitted to perform this task\n"
-    message+="Please, ask the Admins to promote me as an Admin to this group"
+    message=$(bot.string.not_yet_admin)
+
     ShellBot.sendMessage \
       --chat_id ${_chat_id} \
       --text "$(echo -e ${message})" \
       --parse_mode markdown
   
   elif [[ $(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}") ]]; then
-    message="
-    ${_BOT} Live Ada Price, is now turned off
-    \n\n
-    _________________________________________
-    "
+    message=$(bot.string.price_turn_off)
+
     ShellBot.sendMessage \
       --chat_id ${_chat_id} \
       --text "$(echo -e ${message})" \
@@ -149,20 +78,21 @@ bot.adaprice() {
 bot.left() {
   local message get_mess
   get_mess="$(cat ${SCRIPT_CONF} | grep -E -- "${my_chat_member_chat_id[$id]}" | tail -1)"
-  message="${_BOT} Be aware bot has left the group \`\"${my_chat_member_chat_title[$id]}\"\`"
+  message=$(bot.string.left_message)
   ShellBot.sendMessage \
     --chat_id ${my_chat_member_from_id[$id]} \
     --text "$(echo -e ${message})" \
     --parse_mode markdown
 
-  sed -i "/${get_mess}/d" ${SCRIPT_CONF}
+  if [[ ! -z ${get_mess} ]]; then
+    sed -i "/${get_mess}/d" ${SCRIPT_CONF}
+  fi
 }
 
 bot.new_member() {
   local message
 
-  message="${_BOT} I am now added to \`\"${my_chat_member_chat_title[$id]}\"\` group\n"
-  message+="Do not forget to promote me as Admin"
+  message=$(bot.string.new_message)
 
   ShellBot.sendMessage \
     --chat_id ${my_chat_member_from_id[$id]} \
@@ -173,7 +103,7 @@ bot.new_member() {
 bot.is_amdin() {
   local message
 
-  message="${_BOT} I am now promoted to admin on \`\"${my_chat_member_chat_title[$id]}\"\` group\n"
+  message=$(bot.string.admin_message)
 
   ShellBot.sendMessage \
     --chat_id ${my_chat_member_from_id[$id]} \
@@ -191,19 +121,8 @@ bot.recreate_ada_message() {
 
   get_mess="$(cat ${SCRIPT_CONF} | grep -E -- "${_chat_id}" | tail -1)"
 
-  ticker="ADAUSDT"
-  price="USD \$$(curl -sS ${BINANCE_API}${ticker} | jq -r '.price')"
-  
-  message="
-  ${_INCREASE} ${_ADA} -> ${price}
-  \n
-  -= LIVE ADA PRICE =-
-  \n\n\n
-  ${args[@]-_____________________________}
-  \n
-  ${_ITALIC}$(date +"%t%d %b %Y %H:%M:%S")${ITALIC_}
-  "
-  
+  message=$(bot.string.pinned_message)
+
   ShellBot.unpinChatMessage \
     --chat_id ${_chat_id}
 
