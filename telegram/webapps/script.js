@@ -1,28 +1,29 @@
 var Example = Example || {};
 
-Example.newtonsCradle = function() {
+Example.gravity = function() {
     var Engine = Matter.Engine,
         Render = Matter.Render,
         Runner = Matter.Runner,
-        Body = Matter.Body,
         Composites = Matter.Composites,
+        Common = Matter.Common,
         MouseConstraint = Matter.MouseConstraint,
         Mouse = Matter.Mouse,
-        Composite = Matter.Composite;
+        Composite = Matter.Composite,
+        Bodies = Matter.Bodies;
 
     // create engine
     var engine = Engine.create(),
         world = engine.world;
-
 
     // create renderer
     var render = Render.create({
         element: document.body,
         engine: engine,
         options: {
-            width: 480,
-            height: 320,
-            showVelocity: false
+            width: 800,
+            height: 600,
+            showVelocity: true,
+            showAngleIndicator: true
         }
     });
 
@@ -32,14 +33,32 @@ Example.newtonsCradle = function() {
     var runner = Runner.create();
     Runner.run(runner, engine);
 
-    // see newtonsCradle function defined later in this file
-    var cradle = Example.newtonsCradle.newtonsCradle(280, 100, 5, 30, 200);
-    Composite.add(world, cradle);
-    Body.translate(cradle.bodies[0], { x: -180, y: -100 });
+    // add bodies
+    Composite.add(world, [
+        Bodies.rectangle(400, 0, 800, 50, { isStatic: true }),
+        Bodies.rectangle(400, 600, 800, 50.5, { isStatic: true }),
+        Bodies.rectangle(800, 300, 50, 600, { isStatic: true }),
+        Bodies.rectangle(0, 300, 50, 600, { isStatic: true })
+    ]);
+
+    engine.gravity.y = -1;
     
-    //cradle = Example.newtonsCradle.newtonsCradle(280, 380, 7, 20, 140);
-    //Composite.add(world, cradle);
-    //Body.translate(cradle.bodies[0], { x: -140, y: -100 });
+    var stack = Composites.stack(50, 120, 11, 5, 0, 0, function(x, y) {
+        switch (Math.round(Common.random(0, 1))) {
+
+        case 0:
+            if (Common.random() < 0.8) {
+                return Bodies.rectangle(x, y, Common.random(20, 50), Common.random(20, 50));
+            } else {
+                return Bodies.rectangle(x, y, Common.random(80, 120), Common.random(20, 30));
+            }
+        case 1:
+            return Bodies.polygon(x, y, Math.round(Common.random(1, 8)), Common.random(20, 50));
+
+        }
+    });
+    
+    Composite.add(world, stack);
 
     // add mouse control
     var mouse = Mouse.create(render.canvas),
@@ -60,7 +79,7 @@ Example.newtonsCradle = function() {
 
     // fit the render viewport to the scene
     Render.lookAt(render, {
-        min: { x: 0, y: 50 },
+        min: { x: 0, y: 0 },
         max: { x: 800, y: 600 }
     });
 
@@ -72,44 +91,14 @@ Example.newtonsCradle = function() {
         canvas: render.canvas,
         stop: function() {
             Matter.Render.stop(render);
-            //Matter.Runner.stop(runner);
+            Matter.Runner.stop(runner);
         }
     };
 };
 
-Example.newtonsCradle.title = 'Newton\'s Cradle';
-Example.newtonsCradle.for = '>=0.14.2';
-
-/**
-* Creates a composite with a Newton's Cradle setup of bodies and constraints.
-* @method newtonsCradle
-* @param {number} xx
-* @param {number} yy
-* @param {number} number
-* @param {number} size
-* @param {number} length
-* @return {composite} A new composite newtonsCradle body
-*/
-Example.newtonsCradle.newtonsCradle = function(xx, yy, number, size, length) {
-    var Composite = Matter.Composite,
-        Constraint = Matter.Constraint,
-        Bodies = Matter.Bodies;
-
-    var newtonsCradle = Composite.create({ label: 'Newtons Cradle' });
-
-    for (var i = 0; i < number; i++) {
-        var separation = 1.9,
-            circle = Bodies.circle(xx + i * (size * separation), yy + length, size, 
-                { inertia: Infinity, restitution: 1, friction: 0, frictionAir: 0.0001, slop: 1 }),
-            constraint = Constraint.create({ pointA: { x: xx + i * (size * separation), y: yy }, bodyB: circle });
-
-        Composite.addBody(newtonsCradle, circle);
-        Composite.addConstraint(newtonsCradle, constraint);
-    }
-
-    return newtonsCradle;
-};
+Example.gravity.title = 'Reverse Gravity';
+Example.gravity.for = '>0.16.1';
 
 if (typeof module !== 'undefined') {
-    module.exports = Example.newtonsCradle;
+    module.exports = Example.gravity;
 }
