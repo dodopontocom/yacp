@@ -9,6 +9,7 @@ Example.gravity = function() {
         MouseConstraint = Matter.MouseConstraint,
         Mouse = Matter.Mouse,
         Composite = Matter.Composite,
+        Svg = Matter.Svg,
         Bodies = Matter.Bodies;
 
     // create engine
@@ -31,8 +32,18 @@ Example.gravity = function() {
     var runner = Runner.create();
     Runner.run(runner, engine);
 
+
+    var loadSvg = function(url) {
+        return fetch(url)
+            .then(function(response) { return response.text(); })
+            .then(function(raw) { return (new window.DOMParser()).parseFromString(raw, 'image/svg+xml'); });
+    };
+    
     // add bodies
     Composite.add(world, [
+
+        
+
         Bodies.rectangle(400, -300, 800, 50, { isStatic: true }),
         //Bodies.rectangle(400, 600, 800, 50.5, { isStatic: true }),
         Bodies.rectangle(800, -300, 50, 800, { isStatic: true }),
@@ -51,7 +62,14 @@ Example.gravity = function() {
                 return Bodies.rectangle(x, y, Common.random(80, 120), Common.random(20, 30));
             }
         case 1:
-            return Bodies.polygon(x, y, Math.round(Common.random(1, 8)), Common.random(20, 50));
+            return Bodies.circle(x, y, 46, {
+                render: {
+                    sprite: {
+                        texture: './image/ada.png'
+                    }
+                }
+            }
+            );
 
         }
     });
@@ -96,7 +114,3 @@ Example.gravity = function() {
         }
     };
 };
-
-if (typeof module !== 'undefined') {
-    module.exports = Example.gravity;
-}
