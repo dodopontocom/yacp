@@ -20,10 +20,8 @@ Example.gravity = function() {
         element: document.body,
         engine: engine,
         options: {
-            width: 800,
-            height: 600,
-            showVelocity: true,
-            showAngleIndicator: true
+            width: window.innerWidth,
+            height: window.innerHeight
         }
     });
 
@@ -35,10 +33,10 @@ Example.gravity = function() {
 
     // add bodies
     Composite.add(world, [
-        Bodies.rectangle(400, 0, 800, 50, { isStatic: true }),
-        Bodies.rectangle(400, 600, 800, 50.5, { isStatic: true }),
-        Bodies.rectangle(800, 300, 50, 600, { isStatic: true }),
-        Bodies.rectangle(0, 300, 50, 600, { isStatic: true })
+        Bodies.rectangle(400, -300, 800, 50, { isStatic: true }),
+        //Bodies.rectangle(400, 600, 800, 50.5, { isStatic: true }),
+        Bodies.rectangle(800, -300, 50, 800, { isStatic: true }),
+        Bodies.rectangle(0, -300, 50, 800, { isStatic: true })
     ]);
 
     engine.gravity.y = -1;
@@ -57,7 +55,10 @@ Example.gravity = function() {
 
         }
     });
-    
+
+    //var bound = Matter.Composite.bounds(this.body);
+    //Composite.scale(this.body, 100/(bound.max.x-bound.min.x), 100/(bound.max.y-bound.min.y), {x:(bound.max.x-bound.min.x)/2,y:(bound.max.y-bound.min.y)/2});
+
     Composite.add(world, stack);
 
     // add mouse control
@@ -95,9 +96,6 @@ Example.gravity = function() {
         }
     };
 };
-
-Example.gravity.title = 'Reverse Gravity';
-Example.gravity.for = '>0.16.1';
 
 if (typeof module !== 'undefined') {
     module.exports = Example.gravity;
