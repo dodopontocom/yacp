@@ -61,7 +61,7 @@ if [[ $(helper._curlgrep ${_metric_slot_in_epoch}) -ge 300 ]]; then
       touch /tmp/1h
 
       #send monitoring to telegram
-      /home/ubuntu/yacp/telegram/bot/f/_gnuplot.sh >> /tmp/plot
+      /home/ubuntu/yacp/telegram/bot/functions/_gnuplot.sh >> /tmp/plot
 
     fi
   fi
@@ -90,7 +90,7 @@ if [[ $(helper._curlgrep ${_metric_slot_in_epoch}) -ge 300 ]]; then
     curl -s localhost:12798/metrics | grep "cardano_node_metrics_txsProcessedNum_int" | awk '{print $2}' | xargs -I {} echo "$(date -d @$(date +\%s) +\%Y-\%m-\%d-\%H:\%M:\%S) {}" >> /home/ubuntu/.yacp-tx
     
     #send monitoring to telegram
-    /home/ubuntu/yacp/telegram/bot/f/_gnuplot.sh >> /tmp/plot
+    /home/ubuntu/yacp/telegram/bot/functions/_gnuplot.sh >> /tmp/plot
 
     rm /tmp/db_plot_image.png
 	  rm /home/ubuntu/.yacp-db
