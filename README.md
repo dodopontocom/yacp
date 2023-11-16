@@ -1,5 +1,7 @@
 ![](https://img.shields.io/endpoint?url=https://rodolfotiago.npkn.net/relay-status?style=plastic&logo=appveyor) ![](https://img.shields.io/badge/SINGLE-pool%20operator-yellowgreen?style=plastic&logo=appveyor) ![https://www.xspo-alliance.org/](https://img.shields.io/badge/xSPO-official%20member-yellow?style=plastic&logo=appveyor)  
 <img src="https://js.cexplorer.io/img/award/a043982e305ece1af5cfa2bb429359.png" alt="award" width="220">
+<img src="https://js.cexplorer.io/img/award/37fb23430787989dba9cbd6157ac74.png" alt="niver" width="220">
+<img src="https://js.cexplorer.io/img/award/de0b3c4591a3625f98a613bf3d0074.png" alt="first" width="220">
 
 # [YACP] YET ANOTHER COOL POOL
 # [Official Telegram Channel] ➪ https://t.me/cardano_yacp
