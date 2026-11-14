@@ -1,4 +1,4 @@
-import { RIPPLE_MS } from './effects.js';
+import { RIPPLE_MS } from './effects.js?v=20261114-3';
 
 const BACKGROUND = '#0f1115';
 

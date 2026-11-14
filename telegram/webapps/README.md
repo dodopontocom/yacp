@@ -11,8 +11,9 @@ webapps/
 ├── index.html
 ├── style.css
 ├── js/
-│   ├── app.js              # bootstrap, HUD, Telegram e ciclo de vida
-│   ├── telegram.js         # wrapper defensivo do SDK do Telegram
+│   ├── app.js              # loader com cache-busting e recuperação de shell antigo
+│   ├── tetris-app.js       # bootstrap, HUD, Telegram e ciclo de vida
+│   ├── telegram-bridge.js  # wrapper defensivo do SDK do Telegram
 │   └── tetris/
 │       ├── world.js        # mundo Matter.js, input, spawn e regras
 │       ├── pieces.js       # tetraminós e metadados dos blocos
@@ -41,6 +42,22 @@ Abra `http://localhost:8080/telegram/webapps/`.
 
 Para testar dentro do Telegram, publique a branch ou use um túnel HTTPS
 (`cloudflared`, `ngrok`, etc.) e aponte o Mini App para a URL gerada.
+
+### Cache do WebView
+
+O GitHub Pages serve o HTML com `cache-control: max-age=600`, e o WebView do
+Telegram pode manter o HTML antigo por mais tempo que os assets. Se uma versão
+antiga aparecer no Telegram, abra a URL com um cache-buster:
+
+```text
+https://dodopontocom.github.io/yacp/telegram/webapps/?v=20261114-3
+```
+
+O `js/app.js` também detecta um shell antigo (sem `#game`), compara
+`version.json` e recarrega com `?v=` automaticamente quando o loader novo chega
+a ser executado. Ao publicar uma mudança grande, atualize `CACHE_VERSION` em
+`js/app.js`, `version.json`, as query strings de `index.html` e os imports
+versionados em `js/tetris-app.js`/`js/tetris/`.
 
 ## Controles
 

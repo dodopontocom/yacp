@@ -1,10 +1,10 @@
-import { TUNING } from './tuning.js';
-import { createPiece, isPieceBody, PIECE_TYPES } from './pieces.js';
-import { addRipple, spawnBurst, stepEffects } from './effects.js';
-import { findClearableBand } from './pileAnalysis.js';
-import { DISSOLVE_CHIME } from './marimba.js';
-import { drawBackground, drawEffects, drawPiece } from './renderer.js';
-import { getMatter } from './matter.js';
+import { TUNING } from './tuning.js?v=20261114-3';
+import { createPiece, isPieceBody, PIECE_TYPES } from './pieces.js?v=20261114-3';
+import { addRipple, spawnBurst, stepEffects } from './effects.js?v=20261114-3';
+import { findClearableBand } from './pileAnalysis.js?v=20261114-3';
+import { DISSOLVE_CHIME } from './marimba.js?v=20261114-3';
+import { drawBackground, drawEffects, drawPiece } from './renderer.js?v=20261114-3';
+import { getMatter } from './matter.js?v=20261114-3';
 
 const WALL_THICKNESS = 60;
 
