@@ -50,7 +50,7 @@ Telegram pode manter o HTML antigo por mais tempo que os assets. Se uma versão
 antiga aparecer no Telegram, abra a URL com um cache-buster:
 
 ```text
-https://dodopontocom.github.io/yacp/telegram/webapps/?v=20261114-3
+https://dodopontocom.github.io/yacp/telegram/webapps/?v=20261114-4
 ```
 
 O `js/app.js` também detecta um shell antigo (sem `#game`), compara

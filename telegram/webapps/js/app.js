@@ -9,7 +9,7 @@
  * It also compares version.json so a stale HTML shell can discover a newer
  * deployment without waiting for the WebView cache to expire.
  */
-const CACHE_VERSION = '20261114-3';
+const CACHE_VERSION = '20261114-4';
 const shell = document.querySelector('#game');
 
 function loadApp() {
@@ -41,12 +41,12 @@ if (!shell) {
     }
 } else {
     const currentUrl = new URL(window.location.href);
-    const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 1500);
+    const controller = typeof AbortController === 'function' ? new AbortController() : null;
+    const timeout = controller ? window.setTimeout(() => controller.abort(), 1500) : 0;
 
     fetch(`./version.json?ts=${Date.now()}`, {
         cache: 'no-store',
-        signal: controller.signal,
+        ...(controller ? { signal: controller.signal } : {}),
     })
         .then((response) => (response.ok ? response.json() : null))
         .then((data) => {

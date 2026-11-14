@@ -1,4 +1,4 @@
-import { getMatter } from './matter.js?v=20261114-3';
+import { getMatter } from './matter.js?v=20261114-4';
 
 const SAMPLE_SPACING_RATIO = 0.4;
 const EDGE_INSET_RATIO = 0.3;

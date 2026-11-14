@@ -1,4 +1,4 @@
-import { getMatter } from './matter.js?v=20261114-3';
+import { getMatter } from './matter.js?v=20261114-4';
 
 export const PIECE_TYPES = ['I', 'O', 'T', 'S', 'Z', 'J', 'L'];
 

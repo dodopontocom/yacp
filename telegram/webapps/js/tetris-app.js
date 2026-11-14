@@ -1,7 +1,7 @@
-import { createTelegramBridge } from './telegram-bridge.js?v=20261114-3';
-import { TetraZenWorld } from './tetris/world.js?v=20261114-3';
-import { createMarimbaSynth } from './tetris/marimba.js?v=20261114-3';
-import { createTiltController } from './tetris/tilt.js?v=20261114-3';
+import { createTelegramBridge } from './telegram-bridge.js?v=20261114-4';
+import { TetraZenWorld } from './tetris/world.js?v=20261114-4';
+import { createMarimbaSynth } from './tetris/marimba.js?v=20261114-4';
+import { createTiltController } from './tetris/tilt.js?v=20261114-4';
 
 const HINT_MS = 6000;
 const TOAST_MS = 2400;
