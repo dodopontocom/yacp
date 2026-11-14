@@ -1,48 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="MobileOptimized" content="176" />
-    <meta name="HandheldFriendly" content="True" />
-    <meta name="robots" content="noindex,nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="Mini App de física interativa com as ADAs do YACP.">
 
-    <title></title>
+    <title>YACP · Física das ADAs</title>
 
-    <script type="text/javascript" src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script type="text/javascript" src="matter.min.js"></script>
-    <script defer type="text/javascript" src="script.js"></script>
-    <script src="pathseg.js"></script>
-    <link rel="stylesheet" type="text/css" media="all" href="https://dodopontocom.github.io/yacp/telegram/webapps/style.css">
+    <link rel="icon" href="./image/cardano.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./style.css">
 
-    <script>
-        function setThemeClass() {
-            document.documentElement.className = Telegram.WebApp.colorScheme;
-        }
-        Telegram.WebApp.onEvent('themeChanged', setThemeClass);
-        setThemeClass();
-    </script>
-
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script defer src="./vendor/matter-0.20.0.min.js"></script>
+    <script type="module" src="./js/app.js"></script>
 </head>
 
 <body>
-    <section>
-        <!--<img src="https://dodopontocom.github.io/yacp/telegram/logo.gif" width="35%">-->
-        <div id="buttons">
-            <button onclick="Example.gravity();">TRY ME</button>
-        <!--    <small>(The window goes fullscreen)</small>
-            <button onclick="toggleMainButton(this);">Hide Main Button</button>
-            <small>(It hides/shows main button)</small>
-            <button id="btnTime" onclick="sendTime(10);">Send time</button>
-            <small>(The bot will recieve a message with filled <code>web_app_data</code> field)</small>
-        -->
-        </div>
-    </section>
+    <main id="app">
+        <div id="stage" role="img"
+             aria-label="Simulação física das ADAs. Arraste os corpos com o dedo para interagir."></div>
 
-    <!---->
-    <script type="application/javascript" src="telegram.js"></script>
+        <div class="hud">
+            <div class="hud-inner">
+                <p id="status" class="status" aria-live="polite">
+                    Toque em “Soltar as ADAs” para começar.
+                </p>
+
+                <div class="actions">
+                    <button id="tilt" class="secondary" type="button"
+                            aria-pressed="false" hidden>
+                        Inclinar
+                    </button>
+                </div>
+
+                <button id="toggle" class="action" type="button">Soltar as ADAs</button>
+            </div>
+        </div>
+    </main>
+
+    <noscript>
+        <p class="noscript">Este Mini App precisa de JavaScript ativado para executar a simulação.</p>
+    </noscript>
 </body>
 </html>
