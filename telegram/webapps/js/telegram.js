@@ -88,6 +88,32 @@ export function createTelegramBridge() {
     }
 
     /**
+     * Applies explicit Telegram chrome colors. Used by the dark-only Tetra-Zen
+     * shell so a light Telegram theme does not wash out the game.
+     */
+    function setChromeColors({ header, background, bottom } = {}) {
+        if (!isTelegram) {
+            return;
+        }
+
+        try {
+            if (header && isVersionAtLeast('6.1')) {
+                tg.setHeaderColor?.(header);
+            }
+
+            if (background && isVersionAtLeast('6.1')) {
+                tg.setBackgroundColor?.(background);
+            }
+
+            if (bottom && isVersionAtLeast('7.10')) {
+                tg.setBottomBarColor?.(bottom);
+            }
+        } catch {
+            /* Some clients reject colors slightly before a theme settles. */
+        }
+    }
+
+    /**
      * Tells Telegram the essential UI is ready and asks for the full height.
      * Call once, after the first paint.
      */
@@ -179,6 +205,20 @@ export function createTelegramBridge() {
             }
         } catch {
             /* ignore */
+        }
+    }
+
+    function setMainButtonParams(params) {
+        const button = tg?.MainButton;
+        if (!isTelegram || !button || !isVersionAtLeast('6.1')) {
+            return false;
+        }
+
+        try {
+            button.setParams?.(params);
+            return true;
+        } catch {
+            return false;
         }
     }
 
@@ -352,11 +392,13 @@ export function createTelegramBridge() {
         isVersionAtLeast,
         on,
         applyTheme,
+        setChromeColors,
         ready,
         haptic,
         bindMainButton,
         setMainButton,
         setMainButtonEnabled,
+        setMainButtonParams,
         disableVerticalSwipes,
         enableVerticalSwipes,
         hasAccelerometer,

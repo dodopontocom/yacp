@@ -1,7 +1,8 @@
-# YACP — Telegram Mini App (física)
+# Tetra-Zen — Telegram Mini App
 
-Mini App experimental de física 2D com as ADAs do YACP, usando Matter.js e o
-SDK atual do Telegram Mini Apps.
+Jogo de blocos com física 2D para o Telegram Mini App do YACP. A versão anterior,
+com as ADAs e os emojis animados, continua disponível no histórico do Git
+(commit `0bf8084`).
 
 ## Estrutura
 
@@ -10,17 +11,22 @@ webapps/
 ├── index.html
 ├── style.css
 ├── js/
-│   ├── app.js          # bootstrap, tema, viewport, MainButton e controles
-│   ├── telegram.js     # wrapper defensivo do SDK do Telegram
-│   ├── emoji.js        # camada DOM dos emojis animados (TGS/Lottie)
-│   └── physics.js      # cena Matter.js e ciclo de vida
+│   ├── app.js              # bootstrap, HUD, Telegram e ciclo de vida
+│   ├── telegram.js         # wrapper defensivo do SDK do Telegram
+│   └── tetris/
+│       ├── world.js        # mundo Matter.js, input, spawn e regras
+│       ├── pieces.js       # tetraminós e metadados dos blocos
+│       ├── renderer.js     # desenho do fundo, peças e efeitos
+│       ├── effects.js      # partículas e ondas de impacto
+│       ├── pileAnalysis.js # detecção de faixas para dissolver
+│       ├── marimba.js      # síntese de áudio via Web Audio
+│       ├── tilt.js         # acelerômetro do Telegram / DeviceOrientation
+│       ├── tuning.js       # constantes de gameplay
+│       └── matter.js       # resolução preguiçosa do Matter.js
 ├── vendor/
-│   ├── lottie-5.13.0.min.js
-│   ├── matter-0.20.0.min.js
-│   └── pako-2.1.0.min.js
+│   └── matter-0.20.0.min.js
 └── image/
-    ├── ada-160.png     # textura otimizada para os corpos
-    └── emoji/          # animações .tgs e atribuição
+    └── tetra.svg
 ```
 
 ## Desenvolvimento local
@@ -36,49 +42,44 @@ Abra `http://localhost:8080/telegram/webapps/`.
 Para testar dentro do Telegram, publique a branch ou use um túnel HTTPS
 (`cloudflared`, `ngrok`, etc.) e aponte o Mini App para a URL gerada.
 
-## Comportamento
+## Controles
+
+- Arraste uma peça para movê-la.
+- Toque em uma peça para girá-la.
+- Deslize para baixo em uma área vazia para soltar a próxima peça.
+- `Gravidade` inclina o campo para os lados.
+- `Zero-G` reduz a gravidade por alguns segundos.
+- `Reiniciar` limpa a pilha.
+- `Soltar` (ou o MainButton do Telegram) adiciona uma peça imediatamente.
+
+No modo **Zen**, a pilha se dissolve quando fica densa demais. No modo
+**Score Attack**, a rodada termina quando a pilha alcança o topo.
+
+## Comportamento no Telegram
 
 - `ready()` e `expand()` são chamados depois do primeiro paint.
-- O tema acompanha `themeChanged` e as variáveis `--tg-theme-*`.
-- `viewportChanged`, `safeAreaChanged` e `ResizeObserver` mantêm o canvas
-  responsivo.
-- O `MainButton` nativo é usado quando disponível; o botão HTML fica como
-  fallback para navegador.
-- Haptics são usados apenas em ações pontuais.
-- Durante o arrasto, `disableVerticalSwipes()` evita que o gesto vertical
-  minimize o Mini App; os swipes são reativados ao soltar o corpo.
-- O acelerômetro (Bot API 8.0+) é opcional, ativado pelo botão “Inclinar” e
-  desligado quando o app é minimizado. Os valores são lidos de
-  `Telegram.WebApp.Accelerometer` no evento `accelerometerChanged`, porque o
-  SDK não envia os eixos como argumento.
-- Dentro do Telegram, parte das formas geométricas é substituída por emojis
-  animados (💎, 🔥, ⚡, 🐳, 👑 e 🎉). As animações `.tgs` são descomprimidas
-  com `pako` e renderizadas em canvas pelo `lottie-web`; o corpo do Matter.js
-  continua cuidando da colisão e o círculo colorido permanece como fallback
-  caso o asset não carregue.
-- Fora do Telegram o app mantém apenas as formas geométricas. O overlay e os
-  assets de emoji nem são criados nesse caso.
-- Os emojis pausam e retomam junto com a simulação e são destruídos no
-  “Reiniciar”, sem deixar canvases ou animações antigas ativas.
-- O canvas limita o pixel ratio a 2 e ativa sleeping no Matter.js.
-- `sendData()` não é usado pela simulação. Ele só funciona em Mini Apps abertas
-  por keyboard button e fecha o app após o envio.
+- O tema do jogo é sempre escuro; header, background e bottom bar do Telegram
+  são fixados em `#0f1115` para não conflitar com o canvas.
+- O MainButton nativo é usado como “Soltar peça” e vira “Jogar de novo” ao fim
+  da rodada. No navegador, o botão equivalente fica na barra inferior.
+- `disableVerticalSwipes()` é chamado ao tocar no campo e durante o arrasto,
+  para que o gesto de soltar peça não minimize o Mini App.
+- O acelerômetro do Telegram (Bot API 8.0+) controla a gravidade lateral no
+  celular. Se não estiver disponível, o app tenta `DeviceOrientationEvent`.
+- Haptics são usados em drop, reset, troca de modo, dissolução e fim de rodada.
+- A simulação pausa em `deactivated`/`visibilitychange` e retoma ao voltar.
 
-## Matter.js
+## Áudio
 
-A versão vendorizada é a 0.20.0. `pathseg.js` foi removido porque o app não usa
-`Matter.Svg`. A cena é recriada de forma idempotente a cada “Reiniciar”, sem
-deixar runners ou canvas antigos ativos.
+As notas de marimba são sintetizadas em tempo real com a Web Audio API; não há
+arquivos de áudio. O contexto é criado/retomado no primeiro gesto do usuário e
+pode ser silenciado pelo botão de som.
 
-## Emojis animados
+## Créditos
 
-As animações são TGS (Lottie comprimido com gzip), o mesmo formato usado pelos
-emojis animados do Telegram. A marcação `<tg-emoji>` do Bot API é interpretada
-nas mensagens do Telegram, não no HTML do Mini App; por isso as animações são
-renderizadas localmente. O `pako` descomprime o arquivo e o `lottie-web` desenha
-a animação em um canvas posicionado sobre o corpo físico. A camada usa
-`pointer-events: none`, então arrastar e inclinar continuam funcionando.
+A ideia e a implementação original do Tetra-Zen estão no projeto irmão
+`tetris-zen`. Esta versão foi portada para o shell sem build do Mini App, com
+integração ao SDK do Telegram e layout próprio.
 
-As animações foram obtidas de
-[`ilyhalight/telegram-emoji-effects`](https://github.com/ilyhalight/telegram-emoji-effects)
-e são criadas pelo Telegram; veja `image/emoji/README.md` para a atribuição.
+- Ícones: [Lucide](https://lucide.dev) (ISC).
+- Física: [Matter.js](https://brm.io/matter-js/) (MIT).
