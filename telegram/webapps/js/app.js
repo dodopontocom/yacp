@@ -18,10 +18,14 @@ function setStatus(message) {
     statusElement.textContent = message;
 }
 
+function bodiesLabel() {
+    return bridge.hasSDK ? 'as ADAs e os emojis' : 'as ADAs';
+}
+
 function idleStatus() {
     return bridge.hasAccelerometer()
-        ? 'Arraste as ADAs com o dedo. Toque em Inclinar para usar o acelerômetro.'
-        : 'Arraste as ADAs com o dedo para interagir.';
+        ? `Arraste ${bodiesLabel()} com o dedo. Toque em Inclinar para usar o acelerômetro.`
+        : `Arraste ${bodiesLabel()} com o dedo para interagir.`;
 }
 
 function handleAccelerometer(event) {
@@ -110,6 +114,7 @@ function startSimulation() {
         simulation = null;
 
         simulation = createSimulation(stage, {
+            emoji: bridge.hasSDK,
             onDragStart: () => bridge.disableVerticalSwipes(),
             onDragEnd: () => bridge.enableVerticalSwipes(),
         });
@@ -122,7 +127,7 @@ function startSimulation() {
         bridge.setMainButton('Reiniciar', true);
 
         setStatus(tiltEnabled
-            ? 'Arraste as ADAs e incline o aparelho para mudar a gravidade.'
+            ? `Arraste ${bodiesLabel()} e incline o aparelho para mudar a gravidade.`
             : idleStatus());
 
         bridge.haptic('impact', 'light');

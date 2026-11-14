@@ -1,5 +1,8 @@
+import { createEmojiLayer } from './emoji.js';
+
 const TEXTURE_URL = new URL('../image/ada-160.png', import.meta.url).href;
 const MAX_PIXEL_RATIO = 2;
+const MAX_EMOJI_BODIES = 5;
 
 function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
@@ -24,7 +27,7 @@ function readPalette() {
  * Creates one Matter.js scene. The returned object owns every listener and
  * animation frame it starts, so callers can destroy or recreate it safely.
  */
-export function createSimulation(stage, { onDragStart, onDragEnd } = {}) {
+export function createSimulation(stage, { onDragStart, onDragEnd, emoji = false } = {}) {
     const Matter = window.Matter;
     if (!Matter) {
         throw new Error('Matter.js was not loaded.');
@@ -53,6 +56,8 @@ export function createSimulation(stage, { onDragStart, onDragEnd } = {}) {
     let walls = [];
     let adaBodies = [];
     let freeBodies = [];
+    let emojiBodies = [];
+    let emojiLayer = null;
     let resizeTimer = 0;
     let lastWake = 0;
     let mouse = null;
@@ -89,6 +94,14 @@ export function createSimulation(stage, { onDragStart, onDragEnd } = {}) {
 
     render.canvas.setAttribute('aria-hidden', 'true');
     render.canvas.style.touchAction = 'none';
+
+    emojiLayer = createEmojiLayer(stage, { enabled: emoji });
+
+    function syncEmojiBodies() {
+        emojiLayer?.sync();
+    }
+
+    Events.on(render, 'afterRender', syncEmojiBodies);
 
     const gravity = { x: 0, y: 1 };
     const targetGravity = { x: 0, y: 1 };
@@ -221,6 +234,26 @@ export function createSimulation(stage, { onDragStart, onDragEnd } = {}) {
                     return body;
                 }
 
+                const isEmoji = Boolean(emojiLayer)
+                    && emojiBodies.length < MAX_EMOJI_BODIES
+                    && (emojiBodies.length === 0 || Common.random() < 0.5);
+
+                if (isEmoji) {
+                    const radius = Common.clamp(cell * 0.28, 17, 34);
+                    const body = Bodies.circle(x, y, radius, {
+                        restitution: 0.42,
+                        friction: 0.32,
+                        frictionAir: 0.012,
+                        render: {
+                            fillStyle: palette[emojiBodies.length % palette.length],
+                        },
+                    });
+
+                    emojiBodies.push(body);
+                    emojiLayer.attach(body);
+                    return body;
+                }
+
                 const bodyWidth = cell * Common.random(0.42, 0.82);
                 const bodyHeight = cell * Common.random(0.28, 0.5);
                 const body = Bodies.rectangle(x, y, bodyWidth, bodyHeight, {
@@ -345,6 +378,7 @@ export function createSimulation(stage, { onDragStart, onDragEnd } = {}) {
 
         Render.stop(render);
         Runner.stop(runner);
+        emojiLayer?.pause();
         running = false;
     }
 
@@ -355,6 +389,8 @@ export function createSimulation(stage, { onDragStart, onDragEnd } = {}) {
 
         Render.run(render);
         Runner.run(runner, engine);
+        emojiLayer?.resume();
+        emojiLayer?.sync();
         running = true;
     }
 
@@ -369,6 +405,10 @@ export function createSimulation(stage, { onDragStart, onDragEnd } = {}) {
             if (!adaBodies[index].render.sprite) {
                 adaBodies[index].render.fillStyle = palette[index % palette.length];
             }
+        }
+
+        for (let index = 0; index < emojiBodies.length; index += 1) {
+            emojiBodies[index].render.fillStyle = palette[index % palette.length];
         }
     }
 
@@ -388,9 +428,13 @@ export function createSimulation(stage, { onDragStart, onDragEnd } = {}) {
         }
 
         Events.off(engine);
+        Events.off(render, 'afterRender', syncEmojiBodies);
         if (mouseConstraint) {
             Events.off(mouseConstraint);
         }
+
+        emojiLayer?.destroy();
+        emojiLayer = null;
 
         Composite.clear(world, false, true);
         Engine.clear(engine);
@@ -403,6 +447,7 @@ export function createSimulation(stage, { onDragStart, onDragEnd } = {}) {
         walls = [];
         adaBodies = [];
         freeBodies = [];
+        emojiBodies = [];
     }
 
     addWalls(width, height);
